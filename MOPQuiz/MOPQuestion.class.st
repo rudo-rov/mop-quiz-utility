@@ -21,6 +21,12 @@ MOPQuestion >> answers: anObject [
 ]
 
 { #category : #accessing }
+MOPQuestion >> initialize [
+	
+	answers := OrderedCollection new
+]
+
+{ #category : #accessing }
 MOPQuestion >> questionId [
 	^ questionId
 ]

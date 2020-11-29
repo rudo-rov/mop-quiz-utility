@@ -21,6 +21,12 @@ MOPQuiz >> description: anObject [
 ]
 
 { #category : #accessing }
+MOPQuiz >> initialize [
+
+	questions := OrderedCollection new
+]
+
+{ #category : #accessing }
 MOPQuiz >> name [
 	^ name
 ]
