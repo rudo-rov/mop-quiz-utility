@@ -26,9 +26,40 @@ MOPDatabaseConnection class >> resetSession [
 ]
 
 { #category : #initialization }
+MOPDatabaseConnection >> createQuizWithName: aString [
+
+	| newInstance |
+	newInstance := MOPQuiz new
+		name: aString.
+	
+	session inUnitOfWorkDo: [ session register: newInstance ]
+]
+
+{ #category : #initialization }
+MOPDatabaseConnection >> createQuizWithName: aString withDescription: aDescriptionString [
+
+	| newInstance |
+	newInstance := MOPQuiz new
+		name: aString;
+		description: aDescriptionString.
+	
+	session inUnitOfWorkDo: [ session register: newInstance ]
+]
+
+{ #category : #initialization }
 MOPDatabaseConnection >> getAllQuizes [
 
-	^ session read: MOPQuiz
+	^ ((SimpleQuery read: MOPQuiz)
+		orderBy: [ :each | each quizId descending ]
+	)
+]
+
+{ #category : #initialization }
+MOPDatabaseConnection >> getQuizWithId: anInteger [
+
+	^ ((SimpleQuery read: MOPQuiz)
+		where: [ :each | each quizId = anInteger ]
+	) executeIn: session
 ]
 
 { #category : #initialization }
