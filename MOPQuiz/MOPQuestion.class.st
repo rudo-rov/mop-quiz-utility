@@ -11,6 +11,14 @@ Class {
 }
 
 { #category : #accessing }
+MOPQuestion class >> neoJsonMapping: mapper [
+
+	mapper for: self do: [ :mapping |
+		mapping mapInstVars: #(questionId text type answers) 
+	]
+]
+
+{ #category : #accessing }
 MOPQuestion >> answers [
 	^ answers
 ]
