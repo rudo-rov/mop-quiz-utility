@@ -71,6 +71,11 @@ MOPMainWindow >> initializeWidgets [
 	buttonModify 
 		label: 'Modify';
 		icon: (self iconNamed: #edit).
+		
+	listQuiz
+		items: MOPApiRequests new getAllQuizes;
+		displayBlock: [ :quiz | quiz name ];
+		sortingBlock: [ :quizA :quizB | quizA quizId < quizB quizId ]
 ]
 
 { #category : #accessing }
