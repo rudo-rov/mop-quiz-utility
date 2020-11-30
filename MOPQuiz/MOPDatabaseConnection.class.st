@@ -47,11 +47,33 @@ MOPDatabaseConnection >> createQuizWithName: aString withDescription: aDescripti
 ]
 
 { #category : #initialization }
+MOPDatabaseConnection >> deleteAnswerWithId: anInteger [
+
+	session inUnitOfWorkDo: [ 
+		session delete: MOPAnswer where: [ :each | each answerId = anInteger ]	
+	]
+]
+
+{ #category : #initialization }
+MOPDatabaseConnection >> deleteQuestionWithId: anInteger [
+
+	session inUnitOfWorkDo: [ 
+		session delete: MOPQuestion where: [ :each | each questionId = anInteger ]	
+	]
+]
+
+{ #category : #initialization }
+MOPDatabaseConnection >> deleteQuizWithId: anInteger [
+
+	session inUnitOfWorkDo: [ 
+		session delete: MOPQuiz where: [ :each | each quizId = anInteger ]	
+	]
+]
+
+{ #category : #initialization }
 MOPDatabaseConnection >> getAllQuizes [
 
-	^ ((SimpleQuery read: MOPQuiz)
-		orderBy: [ :each | each quizId descending ]
-	)
+	^ session read: MOPQuiz
 ]
 
 { #category : #initialization }
