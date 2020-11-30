@@ -14,8 +14,14 @@ Class {
 MOPQuiz class >> neoJsonMapping: mapper [
 
 	mapper for: self do: [ :mapping |
-		mapping mapInstVars: #(quizId name description questions)
-	]
+		mapping mapInstVars: #(quizId name description).
+		(mapping mapInstVar: #questions) valueSchema: #ArrayOfMOPQuestion
+	].
+
+	mapper for: #ArrayOfMOPQuestion customDo: [ :mapping |
+		mapping listOfElementSchema: MOPQuestion ]
+
+	
 ]
 
 { #category : #accessing }

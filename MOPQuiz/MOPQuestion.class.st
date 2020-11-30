@@ -14,8 +14,12 @@ Class {
 MOPQuestion class >> neoJsonMapping: mapper [
 
 	mapper for: self do: [ :mapping |
-		mapping mapInstVars: #(questionId text type answers) 
-	]
+		mapping mapInstVars: #(questionId text type).
+		(mapping mapInstVar: #answers) valueSchema: #ArrayOfMOPAnswer 
+	].
+
+	mapper for: #ArrayOfMOPAnswer customDo: [ :mapping |
+		mapping listOfElementSchema: MOPAnswer ]
 ]
 
 { #category : #accessing }
