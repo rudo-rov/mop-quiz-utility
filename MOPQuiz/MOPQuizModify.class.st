@@ -3,10 +3,7 @@ Class {
 	#superclass : #ComposableModel,
 	#instVars : [
 		'quiz',
-		'labelName',
-		'labelDescription',
-		'textName',
-		'textDescription',
+		'quizDetails',
 		'listQuestions',
 		'listAnswers',
 		'buttonSave'
@@ -19,16 +16,15 @@ MOPQuizModify class >> defaultSpec [
 
 	^ SpecColumnLayout composed
 		newRow: [ :row |
-			row add: #labelName; add: #textName ] height: ComposableModel buttonHeight;
-		newRow: [ :row |
-			row add: #labelDescription; add: #textDescription ] height: ComposableModel buttonHeight;
+			row add: #quizDetails ] height: 2 * ComposableModel buttonHeight;
 		newRow: [ :row |
 			row 
 				newColumn: [ :col | col add: #listQuestions ];
 				newColumn: [ :col | col add: #listAnswers ] 
 		];
 		newRow: [ :row |
-			row add: #buttonSave ] height: ComposableModel buttonHeight 
+			row add: #buttonSave ] height: ComposableModel buttonHeight;
+		yourself
 ]
 
 { #category : #accessing }
@@ -44,12 +40,7 @@ MOPQuizModify >> buttonSave: anObject [
 { #category : #initialization }
 MOPQuizModify >> initializeWidgets [
 	
-	labelName := self newLabel
-		label: 'Name'.
-	textName := self newTextInput.
-	labelDescription := self newLabel
-		label: 'Description'.
-	textDescription := self newTextInput.
+	quizDetails := self instantiate: MOPQuizDetails.
 	
 	buttonSave := self newButton
 		label: 'Save';
@@ -58,26 +49,6 @@ MOPQuizModify >> initializeWidgets [
 	listQuestions := self newList.
 	
 	listAnswers := self newList.
-]
-
-{ #category : #accessing }
-MOPQuizModify >> labelDescription [
-	^ labelDescription
-]
-
-{ #category : #accessing }
-MOPQuizModify >> labelDescription: anObject [
-	labelDescription := anObject
-]
-
-{ #category : #accessing }
-MOPQuizModify >> labelName [
-	^ labelName
-]
-
-{ #category : #accessing }
-MOPQuizModify >> labelName: anObject [
-	labelName := anObject
 ]
 
 { #category : #accessing }
@@ -110,34 +81,23 @@ MOPQuizModify >> quiz: anObject [
 	quiz := anObject
 ]
 
+{ #category : #accessing }
+MOPQuizModify >> quizDetails [
+	^ quizDetails
+]
+
+{ #category : #accessing }
+MOPQuizModify >> quizDetails: anObject [
+	quizDetails := anObject
+]
+
 { #category : #initialization }
 MOPQuizModify >> setQuiz: aMOPQuiz [
 
 	quiz := aMOPQuiz.
-	textName text: quiz name.
-	textDescription text: quiz description
+	quizDetails quiz: quiz
 	
 	"TODO: Set questions"
-]
-
-{ #category : #accessing }
-MOPQuizModify >> textDescription [
-	^ textDescription
-]
-
-{ #category : #accessing }
-MOPQuizModify >> textDescription: anObject [
-	textDescription := anObject
-]
-
-{ #category : #accessing }
-MOPQuizModify >> textName [
-	^ textName
-]
-
-{ #category : #accessing }
-MOPQuizModify >> textName: anObject [
-	textName := anObject
 ]
 
 { #category : #api }

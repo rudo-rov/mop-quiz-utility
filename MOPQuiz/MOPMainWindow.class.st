@@ -57,7 +57,8 @@ MOPMainWindow >> buttonModify: anObject [
 { #category : #initialization }
 MOPMainWindow >> initializePresenter [
 
-	buttonModify action: [ self onModifyClick ]
+	buttonModify action: [ self onModifyClick ].
+	buttonAdd action: [ MOPQuizCreate new openWithSpec modalRelativeTo: World ]
 ]
 
 { #category : #initialization }

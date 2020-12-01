@@ -20,6 +20,10 @@ MOPTeapot class >> start [
 		GET: '/hello' -> 'Hello world!';
 		GET: '/quiz' -> MOPDatabaseConnection instance getAllQuizes;
 		GET: '/quiz/<id>' -> [ :req | MOPDatabaseConnection instance getQuizWithId: (req at: #id) asInteger ];
+		POST: '/quiz' -> [ :req | 
+			MOPDatabaseConnection instance 
+				createQuizWithName: (req at: #name) 
+				withDescription: (req at: #description) ];
 		exception: KeyNotFound -> (TeaResponse notFound body: 'This message is not understood.');
 		start.
 ]
