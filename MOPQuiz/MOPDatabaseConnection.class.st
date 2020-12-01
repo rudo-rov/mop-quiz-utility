@@ -43,7 +43,8 @@ MOPDatabaseConnection >> createQuizWithName: aString withDescription: aDescripti
 		name: aString;
 		description: aDescriptionString.
 	
-	session inUnitOfWorkDo: [ session register: newInstance ]
+	session inUnitOfWorkDo: [ session register: newInstance ].
+	^ self getAllQuizes
 ]
 
 { #category : #initialization }

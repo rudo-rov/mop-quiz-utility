@@ -9,6 +9,30 @@ Class {
 }
 
 { #category : #initialization }
+MOPApiRequests >> createQuizWithName: aName withDescription: aDescription [
+
+	| response responseJson |
+	response := ZnClient new
+		url: url, '/quiz';
+		formAt: 'name' put: aName;
+		formAt: 'description' put: aDescription;
+		post;
+		response.
+		
+	response
+		ifNil: [ ^ OrderedCollection new ].
+		
+	responseJson := response entity string.
+	^ (NeoJSONReader on: responseJson readStream)
+		mapInstVarsFor: MOPQuiz;
+		for: #ArrayOfMOPQuiz customDo: [ :mapping |
+			mapping listOfElementSchema: MOPQuiz ];
+		nextAs: #ArrayOfMOPQuiz
+		
+	
+]
+
+{ #category : #initialization }
 MOPApiRequests >> getAllQuizes [
 
 	| response responseJson |
