@@ -55,6 +55,12 @@ MOPMainWindow >> buttonModify: anObject [
 ]
 
 { #category : #initialization }
+MOPMainWindow >> initializePresenter [
+
+	buttonModify action: [ self onModifyClick ]
+]
+
+{ #category : #initialization }
 MOPMainWindow >> initializeWidgets [
 	
 	buttonAdd := self newButton.
@@ -86,6 +92,17 @@ MOPMainWindow >> listQuiz [
 { #category : #accessing }
 MOPMainWindow >> listQuiz: anObject [
 	listQuiz := anObject
+]
+
+{ #category : #initialization }
+MOPMainWindow >> onModifyClick [
+
+	| selectedQuiz |
+	selectedQuiz := listQuiz selectedItem.
+	selectedQuiz ifNotNil: [
+		| modifyWindow | 
+		modifyWindow := (MOPQuizModify new setQuiz: selectedQuiz) openWithSpec.
+		modifyWindow modalRelativeTo: World ]
 ]
 
 { #category : #accessing }
