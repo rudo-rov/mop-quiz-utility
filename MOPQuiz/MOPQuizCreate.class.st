@@ -30,6 +30,18 @@ MOPQuizCreate >> buttonSave: anObject [
 ]
 
 { #category : #initialization }
+MOPQuizCreate >> initializePresenter [
+
+	"TODO: Add a control for empty name"
+	| inName inDesc |
+	inName := quizDetails textName text.
+	inDesc := quizDetails textDescription text.
+	
+	inName ifNotEmpty: [ MOPApiRequests new createQuizWithName: inName withDescription: inDesc ]
+	"TODO: use the new list in parent window"
+]
+
+{ #category : #initialization }
 MOPQuizCreate >> initializeWidgets [
 	
 	quizDetails := self instantiate: MOPQuizDetails.
