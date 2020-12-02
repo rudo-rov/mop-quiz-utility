@@ -25,7 +25,9 @@ MOPTeapot class >> start [
 			MOPDatabaseConnection instance 
 				createQuizWithName: (req at: #name) 
 				withDescription: (req at: #description) ];
-		DELETE: 'quiz/<id>' -> [ :req | MOPDatabaseConnection instance deleteQuizWithId: (req at: #id) asInteger ];
+		DELETE: '/quiz/<id>' -> [ :req | MOPDatabaseConnection instance deleteQuizWithId: (req at: #id) asInteger ];
+		DELETE: '/quiz/<qid>/question/<id>' -> [ :req |
+			MOPDatabaseConnection instance deleteQuestionWithId: (req at: #id) asInteger quizId: (req at: #qid) asInteger ];
 		exception: KeyNotFound -> (TeaResponse notFound body: 'This message is not understood.');
 		start.
 ]

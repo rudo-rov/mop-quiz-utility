@@ -58,9 +58,23 @@ MOPDatabaseConnection >> deleteAnswerWithId: anInteger [
 { #category : #initialization }
 MOPDatabaseConnection >> deleteQuestionWithId: anInteger [
 
-	session inUnitOfWorkDo: [ 
-		session delete: MOPQuestion where: [ :each | each questionId = anInteger ]	
-	]
+	| toDelete |
+	toDelete := session readOneOf: MOPQuestion where: [ :q | q questionId = anInteger ].
+	toDelete ifNotNil: [ 
+		session inUnitOfWorkDo: [
+			toDelete answers do: [ :each | session delete: each ].
+			session delete: toDelete	] ]
+	
+]
+
+{ #category : #initialization }
+MOPDatabaseConnection >> deleteQuestionWithId: anInteger quizId: aQuizId [
+
+	| quiz |
+	self deleteQuestionWithId: anInteger.
+	quiz := session readOneOf: MOPQuiz where: [ :q | q quizId = aQuizId ].
+	^ quiz questions
+	
 ]
 
 { #category : #initialization }

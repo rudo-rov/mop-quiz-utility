@@ -6,7 +6,8 @@ Class {
 		'quizDetails',
 		'listQuestions',
 		'listAnswers',
-		'buttonSave'
+		'buttonSave',
+		'buttonDeleteQuestion'
 	],
 	#category : #'MOPQuiz-user-interface'
 }
@@ -19,12 +20,26 @@ MOPQuizModify class >> defaultSpec [
 			row add: #quizDetails ] height: 2 * ComposableModel buttonHeight;
 		newRow: [ :row |
 			row 
-				newColumn: [ :col | col add: #listQuestions ];
+				newColumn: [ :col | 
+					col 
+						add: #listQuestions;
+						newRow: [ :inRow |
+							inRow add: #buttonDeleteQuestion  ] height: ComposableModel buttonHeight ];
 				newColumn: [ :col | col add: #listAnswers ] 
 		];
 		newRow: [ :row |
 			row add: #buttonSave ] height: ComposableModel buttonHeight;
 		yourself
+]
+
+{ #category : #accessing }
+MOPQuizModify >> buttonDeleteQuestion [
+	^ buttonDeleteQuestion
+]
+
+{ #category : #accessing }
+MOPQuizModify >> buttonDeleteQuestion: anObject [
+	buttonDeleteQuestion := anObject
 ]
 
 { #category : #accessing }
@@ -38,6 +53,12 @@ MOPQuizModify >> buttonSave: anObject [
 ]
 
 { #category : #initialization }
+MOPQuizModify >> initializePresenter [
+
+	buttonDeleteQuestion action: [ self onDeleteQuestionClick  ]
+]
+
+{ #category : #initialization }
 MOPQuizModify >> initializeWidgets [
 	
 	quizDetails := self instantiate: MOPQuizDetails.
@@ -45,6 +66,10 @@ MOPQuizModify >> initializeWidgets [
 	buttonSave := self newButton
 		label: 'Save';
 		icon: (self iconNamed: #smallSave).
+		
+	buttonDeleteQuestion := self newButton
+		label: 'Delete';
+		icon: (self iconNamed: #changeRemove).
 		
 	listQuestions := self newList.
 	
@@ -79,6 +104,18 @@ MOPQuizModify >> listQuestions: anObject [
 ]
 
 { #category : #accessing }
+MOPQuizModify >> onDeleteQuestionClick [
+
+	| pickedQuestion newQuestionList |
+	pickedQuestion := listQuestions selectedItem.
+	
+	newQuestionList := MOPApiRequests new 
+		deleteQuestionWithId: pickedQuestion questionId quiz: quiz quizId.
+		
+	listQuestions items: newQuestionList
+]
+
+{ #category : #accessing }
 MOPQuizModify >> quiz [
 	^ quiz
 ]
@@ -107,7 +144,8 @@ MOPQuizModify >> setQuiz: aMOPQuiz [
 	"TODO: Set questions"
 	listQuestions
 		items: quiz questions;
-		displayBlock: [ :q | q text ]
+		displayBlock: [ :q | q text ];
+		sortingBlock: [ :qA :qB | qA questionId < qB questionId ]
 ]
 
 { #category : #api }

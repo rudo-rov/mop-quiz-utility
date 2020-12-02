@@ -70,6 +70,7 @@ MOPQuizDescriptorSystem >> descriptorForMOPQuestion: aDescriptor [
 		to: (table fieldNamed: 'type').
 	(aDescriptor newMapping: ToManyMapping)
 		attributeName: #answers;
+		beExclusive;
 		referenceClass: MOPAnswer	
 ]
 
@@ -119,7 +120,7 @@ MOPQuizDescriptorSystem >> tableForQUESTION: aTable [
 	
 	aTable
 		addForeignKeyFrom: quizField
-		to: ((self tableNamed: 'QUIZ') fieldNamed: 'quiz_id').
+		to: ((self tableNamed: 'QUIZ') fieldNamed: 'quiz_id')
 ]
 
 { #category : #'table models' }
