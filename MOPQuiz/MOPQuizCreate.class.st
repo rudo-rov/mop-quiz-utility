@@ -3,7 +3,8 @@ Class {
 	#superclass : #ComposableModel,
 	#instVars : [
 		'quizDetails',
-		'buttonSave'
+		'buttonSave',
+		'quizes'
 	],
 	#category : #'MOPQuiz-user-interface'
 }
@@ -32,13 +33,7 @@ MOPQuizCreate >> buttonSave: anObject [
 { #category : #initialization }
 MOPQuizCreate >> initializePresenter [
 
-	"TODO: Add a control for empty name"
-	| inName inDesc |
-	inName := quizDetails textName text.
-	inDesc := quizDetails textDescription text.
-	
-	inName ifNotEmpty: [ MOPApiRequests new createQuizWithName: inName withDescription: inDesc ]
-	"TODO: use the new list in parent window"
+	buttonSave action: [ self onSaveClick ]
 ]
 
 { #category : #initialization }
@@ -55,6 +50,20 @@ MOPQuizCreate >> initializeWidgets [
 		add: buttonSave
 ]
 
+{ #category : #initialization }
+MOPQuizCreate >> onSaveClick [
+
+	"TODO: Add a control for empty name"
+	| inName inDesc |
+	inName := quizDetails textName text.
+	inDesc := quizDetails textDescription text.
+	
+	inName ifNotEmpty: [ 
+		quizes items: (MOPApiRequests new createQuizWithName: inName withDescription: inDesc).
+		self window close ]
+	
+]
+
 { #category : #accessing }
 MOPQuizCreate >> quizDetails [
 	^ quizDetails
@@ -63,6 +72,12 @@ MOPQuizCreate >> quizDetails [
 { #category : #accessing }
 MOPQuizCreate >> quizDetails: anObject [
 	quizDetails := anObject
+]
+
+{ #category : #initialization }
+MOPQuizCreate >> quizes: aCollection [
+
+	quizes := aCollection
 ]
 
 { #category : #initialization }

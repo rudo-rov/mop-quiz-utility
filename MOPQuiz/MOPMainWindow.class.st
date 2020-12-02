@@ -58,7 +58,11 @@ MOPMainWindow >> buttonModify: anObject [
 MOPMainWindow >> initializePresenter [
 
 	buttonModify action: [ self onModifyClick ].
-	buttonAdd action: [ MOPQuizCreate new openWithSpec modalRelativeTo: World ].
+	buttonAdd action: [ 
+		| createWindow |
+		createWindow := MOPQuizCreate new. 
+		createWindow quizes: listQuiz.
+		createWindow openWithSpec modalRelativeTo: World ].
 	buttonDelete action: [ self onDeleteClick ]
 ]
 

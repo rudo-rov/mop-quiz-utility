@@ -30,8 +30,10 @@ MOPQuizDetails >> initializeWidgets [
 	labelDescription := self newLabel
 		label: 'Description'.
 		
-	textName := self newTextInput.
-	textDescription := self newTextInput.
+	textName := self newTextInput
+		autoAccept: true.
+	textDescription := self newTextInput
+		autoAccept: true.
 	
 	self focusOrder
 		add: textName;

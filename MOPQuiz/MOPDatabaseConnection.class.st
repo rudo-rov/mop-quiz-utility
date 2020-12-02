@@ -76,7 +76,7 @@ MOPDatabaseConnection >> deleteQuizWithId: anInteger [
 { #category : #initialization }
 MOPDatabaseConnection >> getAllQuizes [
 
-	^ session read: MOPQuiz
+	^ ((SimpleQuery read: MOPQuiz) shouldRefresh: true) executeIn: session
 ]
 
 { #category : #initialization }

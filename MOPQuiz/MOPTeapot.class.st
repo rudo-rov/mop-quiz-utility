@@ -15,6 +15,7 @@ MOPTeapot class >> start [
 		#port -> 8080.
 		#bindAddress -> #[127 0 0 1].
 	}.
+	MOPDatabaseConnection resetSession. "To clear junk from debugging"
 	
 	teapot
 		GET: '/hello' -> 'Hello world!';
