@@ -48,7 +48,14 @@ MOPQuizModify >> initializeWidgets [
 		
 	listQuestions := self newList.
 	
+	"Items for this list in initializePresenter"
 	listAnswers := self newList.
+	
+	self focusOrder
+		add: quizDetails;
+		add: listQuestions;
+		add: listAnswers;
+		add: buttonSave
 ]
 
 { #category : #accessing }
@@ -95,9 +102,12 @@ MOPQuizModify >> quizDetails: anObject [
 MOPQuizModify >> setQuiz: aMOPQuiz [
 
 	quiz := aMOPQuiz.
-	quizDetails quiz: quiz
+	quizDetails quiz: quiz.
 	
 	"TODO: Set questions"
+	listQuestions
+		items: quiz questions;
+		displayBlock: [ :q | q text ]
 ]
 
 { #category : #api }

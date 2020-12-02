@@ -11,7 +11,7 @@ Class {
 MOPTeapot class >> start [
 
 	teapot := Teapot configure: { 
-		#defaultOutput -> #json.
+		#defaultOutput -> #ston.
 		#port -> 8080.
 		#bindAddress -> #[127 0 0 1].
 	}.

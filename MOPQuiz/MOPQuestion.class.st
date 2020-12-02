@@ -11,18 +11,6 @@ Class {
 }
 
 { #category : #accessing }
-MOPQuestion class >> neoJsonMapping: mapper [
-
-	mapper for: self do: [ :mapping |
-		mapping mapInstVars: #(questionId text type).
-		(mapping mapInstVar: #answers) valueSchema: #ArrayOfMOPAnswer 
-	].
-
-	mapper for: #ArrayOfMOPAnswer customDo: [ :mapping |
-		mapping listOfElementSchema: MOPAnswer ]
-]
-
-{ #category : #accessing }
 MOPQuestion >> answers [
 	^ answers
 ]

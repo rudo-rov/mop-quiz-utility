@@ -11,23 +11,17 @@ Class {
 { #category : #initialization }
 MOPApiRequests >> createQuizWithName: aName withDescription: aDescription [
 
-	| response responseJson |
+	| response |
 	response := ZnClient new
 		url: url, '/quiz';
 		formAt: 'name' put: aName;
 		formAt: 'description' put: aDescription;
-		post;
-		response.
+		post.
 		
 	response
 		ifNil: [ ^ OrderedCollection new ].
 		
-	responseJson := response entity string.
-	^ (NeoJSONReader on: responseJson readStream)
-		mapInstVarsFor: MOPQuiz;
-		for: #ArrayOfMOPQuiz customDo: [ :mapping |
-			mapping listOfElementSchema: MOPQuiz ];
-		nextAs: #ArrayOfMOPQuiz
+	^ (STONReader on: response readStream) next
 		
 	
 ]
@@ -35,38 +29,26 @@ MOPApiRequests >> createQuizWithName: aName withDescription: aDescription [
 { #category : #initialization }
 MOPApiRequests >> deleteQuizWithId: anInteger [
 
-	| response responseJson |
+	| response |
 	response := ZnClient new
 		url: url, '/quiz/', anInteger asString;
-		delete;
-		response.
+		delete.
 		
-	responseJson := response entity string.
-	^ (NeoJSONReader on: responseJson readStream)
-		mapInstVarsFor: MOPQuiz;
-		for: #ArrayOfMOPQuizes customDo: [ :mapping |
-			mapping listOfElementSchema: MOPQuiz ];
-		nextAs: #ArrayOfMOPQuizes	
+	^ (STONReader on: response readStream) next
 ]
 
 { #category : #initialization }
 MOPApiRequests >> getAllQuizes [
 
-	| response responseJson |
+	| response  |
 	response := ZnClient new
 		url: url , '/quiz';
-		get;
-		response.
+		get.
 		
 	response
 		ifNil: [ ^ OrderedCollection new ].
 		
-	responseJson := response entity string.
-	^ (NeoJSONReader on: responseJson readStream)
-		mapInstVarsFor: MOPQuiz;
-		for: #ArrayOfMOPQuizes customDo: [ :mapping |
-			mapping listOfElementSchema: MOPQuiz ];
-		nextAs: #ArrayOfMOPQuizes 	
+	^ ((STONReader on: response readStream) next)
 ]
 
 { #category : #initialization }

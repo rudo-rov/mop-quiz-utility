@@ -10,14 +10,6 @@ Class {
 }
 
 { #category : #accessing }
-MOPAnswer class >> neoJsonMapping: mapper [
-
-	mapper for: self do: [ :mapping |
-		mapping mapInstVars: #(answerId text isRight) 
-	]
-]
-
-{ #category : #accessing }
 MOPAnswer >> answerId [
 	^ answerId
 ]
