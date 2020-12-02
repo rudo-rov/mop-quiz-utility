@@ -68,7 +68,9 @@ MOPDatabaseConnection >> deleteQuizWithId: anInteger [
 
 	session inUnitOfWorkDo: [ 
 		session delete: MOPQuiz where: [ :each | each quizId = anInteger ]	
-	]
+	].
+
+	^ self getAllQuizes
 ]
 
 { #category : #initialization }

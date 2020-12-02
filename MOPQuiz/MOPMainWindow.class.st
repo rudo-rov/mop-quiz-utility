@@ -58,7 +58,8 @@ MOPMainWindow >> buttonModify: anObject [
 MOPMainWindow >> initializePresenter [
 
 	buttonModify action: [ self onModifyClick ].
-	buttonAdd action: [ MOPQuizCreate new openWithSpec modalRelativeTo: World ]
+	buttonAdd action: [ MOPQuizCreate new openWithSpec modalRelativeTo: World ].
+	buttonDelete action: [ self onDeleteClick ]
 ]
 
 { #category : #initialization }
@@ -93,6 +94,17 @@ MOPMainWindow >> listQuiz [
 { #category : #accessing }
 MOPMainWindow >> listQuiz: anObject [
 	listQuiz := anObject
+]
+
+{ #category : #initialization }
+MOPMainWindow >> onDeleteClick [
+
+	| selectedQuiz newList |
+	selectedQuiz := listQuiz selectedItem.
+	selectedQuiz ifNotNil: [ 
+		newList := MOPApiRequests new deleteQuizWithId: selectedQuiz quizId ].
+	
+	listQuiz items: newList
 ]
 
 { #category : #initialization }

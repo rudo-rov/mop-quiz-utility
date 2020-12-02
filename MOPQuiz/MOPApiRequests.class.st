@@ -33,6 +33,23 @@ MOPApiRequests >> createQuizWithName: aName withDescription: aDescription [
 ]
 
 { #category : #initialization }
+MOPApiRequests >> deleteQuizWithId: anInteger [
+
+	| response responseJson |
+	response := ZnClient new
+		url: url, '/quiz/', anInteger asString;
+		delete;
+		response.
+		
+	responseJson := response entity string.
+	^ (NeoJSONReader on: responseJson readStream)
+		mapInstVarsFor: MOPQuiz;
+		for: #ArrayOfMOPQuizes customDo: [ :mapping |
+			mapping listOfElementSchema: MOPQuiz ];
+		nextAs: #ArrayOfMOPQuizes	
+]
+
+{ #category : #initialization }
 MOPApiRequests >> getAllQuizes [
 
 	| response responseJson |
