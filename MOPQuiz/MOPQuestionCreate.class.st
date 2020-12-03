@@ -10,7 +10,8 @@ Class {
 		'buttonSave',
 		'radioSingle',
 		'radioMulti',
-		'radioText'
+		'radioText',
+		'newQuestionType'
 	],
 	#category : #'MOPQuiz-user-interface'
 }
@@ -36,6 +37,15 @@ MOPQuestionCreate >> buttonSave [
 { #category : #accessing }
 MOPQuestionCreate >> buttonSave: anObject [
 	buttonSave := anObject
+]
+
+{ #category : #initialization }
+MOPQuestionCreate >> initializePresenter [
+
+	radioSingle activationAction: [ newQuestionType = 1 ].
+	radioMulti activationAction: [ newQuestionType = 2 ].
+	radioText activationAction: [ newQuestionType = 3 ].
+	buttonSave action: [ self onSaveClick  ]
 ]
 
 { #category : #initialization }
@@ -87,6 +97,20 @@ MOPQuestionCreate >> labelType [
 { #category : #accessing }
 MOPQuestionCreate >> labelType: anObject [
 	labelType := anObject
+]
+
+{ #category : #initialization }
+MOPQuestionCreate >> onSaveClick [
+
+	| text newList |
+	text := textQuestion text.
+	text ifNotNil: [ 
+		newList := MOPApiRequests new
+			createQuestionWithText: text 
+			withType: newQuestionType  
+			forQuiz: quiz quizId ].
+	quiz questions: newList.
+	self window close
 ]
 
 { #category : #accessing }

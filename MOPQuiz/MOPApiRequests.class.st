@@ -9,6 +9,24 @@ Class {
 }
 
 { #category : #initialization }
+MOPApiRequests >> createQuestionWithText: aText withType: aType forQuiz: aQuizId [
+
+	| response |
+	response := ZnClient new
+		url: url, '/quiz/', aQuizId asString, '/question';
+		formAt: 'text' add: aText;
+		formAt: 'type' add: aType asString;
+		post.
+		
+	response
+		ifNil: [ ^ OrderedCollection new ].
+		
+	^ (STONReader on: response readStream) next
+		
+	
+]
+
+{ #category : #initialization }
 MOPApiRequests >> createQuizWithName: aName withDescription: aDescription [
 
 	| response |

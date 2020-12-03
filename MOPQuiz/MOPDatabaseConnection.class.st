@@ -26,6 +26,25 @@ MOPDatabaseConnection class >> resetSession [
 ]
 
 { #category : #initialization }
+MOPDatabaseConnection >> createQuestionWithText: aString withType: anInteger forQuiz: aQuizId [
+
+	| quiz |
+	quiz := session readOneOf: MOPQuiz where: [ :q | q quizId = aQuizId ].
+	quiz ifNil: [ ^ OrderedCollection new ].
+	
+	session inUnitOfWorkDo: [
+		| newQuestion |
+		newQuestion := MOPQuestion new
+			text: aString;
+			type: anInteger.
+		session register: newQuestion. 
+		quiz questions add: newQuestion.
+		session register: quiz ].
+		
+	^ quiz questions
+]
+
+{ #category : #initialization }
 MOPDatabaseConnection >> createQuizWithName: aString [
 
 	| newInstance |
@@ -116,6 +135,12 @@ MOPDatabaseConnection >> initialize [
 		
 	session := MOPQuizDescriptorSystem sessionForLogin: login.
 	session login
+]
+
+{ #category : #initialization }
+MOPDatabaseConnection >> recreateTables [
+
+	session recreateTables
 ]
 
 { #category : #initialization }

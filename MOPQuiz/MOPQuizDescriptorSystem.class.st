@@ -98,7 +98,7 @@ MOPQuizDescriptorSystem >> descriptorForMOPQuiz: aDescriptor [
 MOPQuizDescriptorSystem >> tableForANSWER: aTable [
 
 	| questionField |
-	(aTable createFieldNamed: 'answer_id' type: platform serial) bePrimaryKey.
+	(aTable createFieldNamed: 'answer_id' type: platform sequence) bePrimaryKey.
 	questionField := aTable createFieldNamed: 'question_id' type: platform integer.
 	aTable createFieldNamed: 'text' type: platform text.
 	aTable createFieldNamed: 'is_right' type: platform boolean.
@@ -112,7 +112,7 @@ MOPQuizDescriptorSystem >> tableForANSWER: aTable [
 MOPQuizDescriptorSystem >> tableForQUESTION: aTable [
 	
 	| quizField |
-	(aTable createFieldNamed: 'question_id' type: platform serial)
+	(aTable createFieldNamed: 'question_id' type: platform sequence)
 		bePrimaryKey.
 	quizField := aTable createFieldNamed: 'quiz_id' type: platform integer.
 	aTable createFieldNamed: 'text' type: platform text.
@@ -126,7 +126,7 @@ MOPQuizDescriptorSystem >> tableForQUESTION: aTable [
 { #category : #'table models' }
 MOPQuizDescriptorSystem >> tableForQUIZ: aTable [
 
-	(aTable createFieldNamed: 'quiz_id' type: platform serial)
+	(aTable createFieldNamed: 'quiz_id' type: platform sequence)
 		bePrimaryKey.
 	aTable
 		createFieldNamed: 'name' type: platform text.

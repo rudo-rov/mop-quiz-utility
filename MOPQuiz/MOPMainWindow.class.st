@@ -69,6 +69,7 @@ MOPMainWindow >> initializePresenter [
 { #category : #initialization }
 MOPMainWindow >> initializeWidgets [
 	
+	| quizes |
 	buttonAdd := self newButton.
 	buttonDelete := self newButton.
 	buttonModify := self newButton.
@@ -83,9 +84,10 @@ MOPMainWindow >> initializeWidgets [
 	buttonModify 
 		label: 'Modify';
 		icon: (self iconNamed: #edit).
-		
+	
+	quizes := MOPApiRequests new getAllQuizes.	
 	listQuiz
-		items: MOPApiRequests new getAllQuizes;
+		items: quizes;
 		displayBlock: [ :quiz | quiz name ];
 		sortingBlock: [ :quizA :quizB | quizA quizId < quizB quizId ]
 ]

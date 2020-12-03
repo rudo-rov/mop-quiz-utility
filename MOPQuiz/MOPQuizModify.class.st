@@ -71,7 +71,8 @@ MOPQuizModify >> initializePresenter [
 		| createWindow |
 		createWindow := MOPQuestionCreate new.
 		createWindow quiz: quiz.
-		createWindow openWithSpec modalRelativeTo: World ].
+		"createWindow openWithSpec modalRelativeTo: World"
+		createWindow openWithSpec ].
 	listQuestions whenSelectedItemChanged: [ self onSelectedQuestionChanged ]
 	
 ]
@@ -144,10 +145,12 @@ MOPQuizModify >> onSelectedQuestionChanged [
 
 	| selectedQuestion |
 	selectedQuestion := listQuestions selectedItem.
-	listAnswers
-		items: selectedQuestion answers;
-		displayBlock: [ :a | a text ];
-		sortingBlock: [ :a1 :a2 | a1 answerId < a2 answerId ]
+	selectedQuestion ifNotNil: [ 
+		listAnswers
+			items: selectedQuestion answers;
+			displayBlock: [ :a | a text ];
+			sortingBlock: [ :a1 :a2 | a1 answerId < a2 answerId ] ]
+	
 ]
 
 { #category : #accessing }

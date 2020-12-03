@@ -21,6 +21,11 @@ MOPTeapot class >> start [
 		GET: '/hello' -> 'Hello world!';
 		GET: '/quiz' -> MOPDatabaseConnection instance getAllQuizes;
 		GET: '/quiz/<id>' -> [ :req | MOPDatabaseConnection instance getQuizWithId: (req at: #id) asInteger ];
+		POST: '/quiz/<quizId>/question' -> [ :req |
+			MOPDatabaseConnection instance
+				createQuestionWithText: (req at: #text) 
+				withType: (req at: #type) asInteger 
+				forQuiz: (req at: #quizId) asInteger ];
 		POST: '/quiz' -> [ :req | 
 			MOPDatabaseConnection instance 
 				createQuizWithName: (req at: #name) 
