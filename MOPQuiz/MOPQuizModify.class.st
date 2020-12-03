@@ -70,9 +70,11 @@ MOPQuizModify >> initializePresenter [
 	buttonAddQuestion action: [ 
 		| createWindow |
 		createWindow := MOPQuestionCreate new.
-		createWindow quiz: quiz.
+		createWindow quiz: quiz;
+			listQuestions: listQuestions.
 		"createWindow openWithSpec modalRelativeTo: World"
-		createWindow openWithSpec ].
+		createWindow openWithSpec.
+		listQuestions items: quiz questions ].
 	listQuestions whenSelectedItemChanged: [ self onSelectedQuestionChanged ]
 	
 ]

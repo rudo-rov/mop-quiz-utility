@@ -11,7 +11,8 @@ Class {
 		'radioSingle',
 		'radioMulti',
 		'radioText',
-		'newQuestionType'
+		'newQuestionType',
+		'listQuestions'
 	],
 	#category : #'MOPQuiz-user-interface'
 }
@@ -100,6 +101,12 @@ MOPQuestionCreate >> labelType: anObject [
 ]
 
 { #category : #initialization }
+MOPQuestionCreate >> listQuestions: aList [
+
+	listQuestions := aList
+]
+
+{ #category : #initialization }
 MOPQuestionCreate >> onSaveClick [
 
 	| text newList |
@@ -110,6 +117,7 @@ MOPQuestionCreate >> onSaveClick [
 			withType: newQuestionType  
 			forQuiz: quiz quizId ].
 	quiz questions: newList.
+	listQuestions items: newList.
 	self window close
 ]
 
