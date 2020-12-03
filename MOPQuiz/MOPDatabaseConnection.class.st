@@ -72,7 +72,8 @@ MOPDatabaseConnection >> deleteQuestionWithId: anInteger quizId: aQuizId [
 
 	| quiz |
 	self deleteQuestionWithId: anInteger.
-	quiz := session readOneOf: MOPQuiz where: [ :q | q quizId = aQuizId ].
+	quiz := ((SimpleQuery readOneOf: MOPQuiz where: [ :q | q quizId = aQuizId ])
+		shouldRefresh: true) executeIn: session.
 	^ quiz questions
 	
 ]
