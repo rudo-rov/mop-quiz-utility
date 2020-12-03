@@ -55,7 +55,8 @@ MOPQuizModify >> buttonSave: anObject [
 { #category : #initialization }
 MOPQuizModify >> initializePresenter [
 
-	buttonDeleteQuestion action: [ self onDeleteQuestionClick  ]
+	buttonDeleteQuestion action: [ self onDeleteQuestionClick  ].
+	listQuestions whenSelectedItemChanged: [ self onSelectedQuestionChanged ]
 ]
 
 { #category : #initialization }
@@ -113,6 +114,17 @@ MOPQuizModify >> onDeleteQuestionClick [
 		deleteQuestionWithId: pickedQuestion questionId quiz: quiz quizId.
 		
 	listQuestions items: newQuestionList
+]
+
+{ #category : #accessing }
+MOPQuizModify >> onSelectedQuestionChanged [
+
+	| selectedQuestion |
+	selectedQuestion := listQuestions selectedItem.
+	listAnswers
+		items: selectedQuestion answers;
+		displayBlock: [ :a | a text ];
+		sortingBlock: [ :a1 :a2 | a1 answerId < a2 answerId ]
 ]
 
 { #category : #accessing }
