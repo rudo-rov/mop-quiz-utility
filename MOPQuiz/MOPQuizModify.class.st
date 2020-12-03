@@ -7,7 +7,8 @@ Class {
 		'listQuestions',
 		'listAnswers',
 		'buttonSave',
-		'buttonDeleteQuestion'
+		'buttonDeleteQuestion',
+		'buttonAddQuestion'
 	],
 	#category : #'MOPQuiz-user-interface'
 }
@@ -24,12 +25,22 @@ MOPQuizModify class >> defaultSpec [
 					col 
 						add: #listQuestions;
 						newRow: [ :inRow |
-							inRow add: #buttonDeleteQuestion  ] height: ComposableModel buttonHeight ];
+							inRow add: #buttonAddQuestion; add: #buttonDeleteQuestion  ] height: ComposableModel buttonHeight ];
 				newColumn: [ :col | col add: #listAnswers ] 
 		];
 		newRow: [ :row |
 			row add: #buttonSave ] height: ComposableModel buttonHeight;
 		yourself
+]
+
+{ #category : #accessing }
+MOPQuizModify >> buttonAddQuestion [
+	^ buttonAddQuestion
+]
+
+{ #category : #accessing }
+MOPQuizModify >> buttonAddQuestion: anObject [
+	buttonAddQuestion := anObject
 ]
 
 { #category : #accessing }
@@ -56,7 +67,13 @@ MOPQuizModify >> buttonSave: anObject [
 MOPQuizModify >> initializePresenter [
 
 	buttonDeleteQuestion action: [ self onDeleteQuestionClick  ].
+	buttonAddQuestion action: [ 
+		| createWindow |
+		createWindow := MOPQuestionCreate new.
+		createWindow quiz: quiz.
+		createWindow openWithSpec modalRelativeTo: World ].
 	listQuestions whenSelectedItemChanged: [ self onSelectedQuestionChanged ]
+	
 ]
 
 { #category : #initialization }
@@ -72,6 +89,10 @@ MOPQuizModify >> initializeWidgets [
 		label: 'Delete';
 		icon: (self iconNamed: #changeRemove).
 		
+	buttonAddQuestion := self newButton
+		label: 'Add';
+		icon: (self iconNamed: #add).
+		
 	listQuestions := self newList.
 	
 	"Items for this list in initializePresenter"
@@ -81,6 +102,8 @@ MOPQuizModify >> initializeWidgets [
 		add: quizDetails;
 		add: listQuestions;
 		add: listAnswers;
+		add: buttonAddQuestion;
+		add: buttonDeleteQuestion;
 		add: buttonSave
 ]
 
