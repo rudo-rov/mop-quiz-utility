@@ -8,7 +8,9 @@ Class {
 		'listAnswers',
 		'buttonSave',
 		'buttonDeleteQuestion',
-		'buttonAddQuestion'
+		'buttonAddQuestion',
+		'buttonDeleteAnswer',
+		'buttonAddAnswer'
 	],
 	#category : #'MOPQuiz-user-interface'
 }
@@ -26,11 +28,25 @@ MOPQuizModify class >> defaultSpec [
 						add: #listQuestions;
 						newRow: [ :inRow |
 							inRow add: #buttonAddQuestion; add: #buttonDeleteQuestion  ] height: ComposableModel buttonHeight ];
-				newColumn: [ :col | col add: #listAnswers ] 
+				newColumn: [ :col | 
+					col 
+						add: #listAnswers;
+						newRow: [ :inRow |
+							inRow add: #buttonAddAnswer; add: #buttonDeleteAnswer ] height: ComposableModel buttonHeight ] 
 		];
 		newRow: [ :row |
 			row add: #buttonSave ] height: ComposableModel buttonHeight;
 		yourself
+]
+
+{ #category : #accessing }
+MOPQuizModify >> buttonAddAnswer [
+	^ buttonAddAnswer
+]
+
+{ #category : #accessing }
+MOPQuizModify >> buttonAddAnswer: anObject [
+	buttonAddAnswer := anObject
 ]
 
 { #category : #accessing }
@@ -41,6 +57,16 @@ MOPQuizModify >> buttonAddQuestion [
 { #category : #accessing }
 MOPQuizModify >> buttonAddQuestion: anObject [
 	buttonAddQuestion := anObject
+]
+
+{ #category : #accessing }
+MOPQuizModify >> buttonDeleteAnswer [
+	^ buttonDeleteAnswer
+]
+
+{ #category : #accessing }
+MOPQuizModify >> buttonDeleteAnswer: anObject [
+	buttonDeleteAnswer := anObject
 ]
 
 { #category : #accessing }
@@ -96,6 +122,14 @@ MOPQuizModify >> initializeWidgets [
 		label: 'Add';
 		icon: (self iconNamed: #add).
 		
+	buttonAddAnswer := self newButton
+		label: 'Add';
+		icon: (self iconNamed: #add).
+		
+	buttonDeleteAnswer := self newButton
+		label: 'Delete';
+		icon: (self iconNamed: #changeRemove).
+		
 	listQuestions := self newList.
 	
 	"Items for this list in initializePresenter"
@@ -107,6 +141,8 @@ MOPQuizModify >> initializeWidgets [
 		add: listAnswers;
 		add: buttonAddQuestion;
 		add: buttonDeleteQuestion;
+		add: buttonAddAnswer;
+		add: buttonDeleteAnswer;
 		add: buttonSave
 ]
 
