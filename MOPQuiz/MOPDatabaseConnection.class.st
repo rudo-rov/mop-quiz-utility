@@ -26,6 +26,25 @@ MOPDatabaseConnection class >> resetSession [
 ]
 
 { #category : #initialization }
+MOPDatabaseConnection >> createAnswer: aString isRight: aBool forQuestion: aQuestionId [
+
+	| question |
+	question := session readOneOf: MOPQuestion where: [ :q | q questionId = aQuestionId  ].
+	question ifNil: [ ^ OrderedCollection new ].
+	
+	session inUnitOfWorkDo: [ 
+		| newAnswer |
+		newAnswer := MOPAnswer new
+			text: aString;
+			isRight: aBool.
+		session register: newAnswer.
+		question answers add: newAnswer.
+		session register: question ].
+	
+	^ question answers
+]
+
+{ #category : #initialization }
 MOPDatabaseConnection >> createQuestionWithText: aString withType: anInteger forQuiz: aQuizId [
 
 	| quiz |
@@ -72,6 +91,18 @@ MOPDatabaseConnection >> deleteAnswerWithId: anInteger [
 	session inUnitOfWorkDo: [ 
 		session delete: MOPAnswer where: [ :each | each answerId = anInteger ]	
 	]
+]
+
+{ #category : #initialization }
+MOPDatabaseConnection >> deleteAnswerWithId: anAnswerId forQuestion: aQuestionId [
+
+	| question |
+	question := session readOneOf: MOPQuestion where: [ :q | q questionId = aQuestionId ].
+	question ifNil: [ ^ OrderedCollection new ].
+	
+	session inUnitOfWorkDo: [ 
+		question answers copy do: [ :each | each answerId = anAnswerId ifTrue: [ question answers remove: each ] ]. 
+		session register: question. ]
 ]
 
 { #category : #initialization }

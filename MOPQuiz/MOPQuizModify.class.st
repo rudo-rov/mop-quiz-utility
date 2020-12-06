@@ -101,6 +101,11 @@ MOPQuizModify >> initializePresenter [
 		"createWindow openWithSpec modalRelativeTo: World"
 		createWindow openWithSpec.
 		listQuestions items: quiz questions ].
+	buttonAddAnswer action: [ 
+		| createWindow |
+		createWindow := MOPAnswerCreate new.
+		createWindow question: listQuestions selectedItem.
+		createWindow openWithSpec ].
 	listQuestions whenSelectedItemChanged: [ self onSelectedQuestionChanged ]
 	
 ]
@@ -187,7 +192,10 @@ MOPQuizModify >> onSelectedQuestionChanged [
 		listAnswers
 			items: selectedQuestion answers;
 			displayBlock: [ :a | a text ];
-			sortingBlock: [ :a1 :a2 | a1 answerId < a2 answerId ] ]
+			sortingBlock: [ :a1 :a2 | a1 answerId < a2 answerId ];
+			icons: [ :a | a isRight
+				ifTrue: [ ^ (self iconNamed: #glamorousAccept ) ]
+				ifFalse: [ ^ (self iconNamed: #glamorousRedCircle) ] ] ]  
 	
 ]
 
