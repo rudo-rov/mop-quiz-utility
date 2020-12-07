@@ -48,7 +48,7 @@ MOPQuizProgress >> quiz [
 MOPQuizProgress >> quiz: aMOPQuiz [
 
 	quiz := aMOPQuiz.
-	currentQuestion := 1
+	currentQuestion := 0
 ]
 
 { #category : #accessing }
