@@ -17,9 +17,25 @@ MOPQuizProgress >> currentQuestion [
 ]
 
 { #category : #accessing }
+MOPQuizProgress >> currentQuestionIndex [
+
+	^ currentQuestion
+]
+
+{ #category : #accessing }
 MOPQuizProgress >> initialize [
 
-	score := 0
+	score := 0.
+	currentQuestion := 0
+]
+
+{ #category : #accessing }
+MOPQuizProgress >> nextQuestion [
+
+	currentQuestion = quiz questions size
+		ifTrue: [ ^ nil ]. "Indicate the end of the quiz"
+	currentQuestion := currentQuestion + 1.
+	^ quiz questions at: currentQuestion
 ]
 
 { #category : #accessing }
@@ -33,6 +49,12 @@ MOPQuizProgress >> quiz: aMOPQuiz [
 
 	quiz := aMOPQuiz.
 	currentQuestion := 1
+]
+
+{ #category : #accessing }
+MOPQuizProgress >> score [
+
+	^ score
 ]
 
 { #category : #accessing }

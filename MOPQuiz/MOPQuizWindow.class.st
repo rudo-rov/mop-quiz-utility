@@ -1,6 +1,6 @@
 Class {
 	#name : #MOPQuizWindow,
-	#superclass : #ComposableModel,
+	#superclass : #DynamicComposableModel,
 	#instVars : [
 		'quizProgress',
 		'buttonNext',
@@ -45,6 +45,15 @@ MOPQuizWindow >> buttonSkip: anObject [
 ]
 
 { #category : #initialization }
+MOPQuizWindow >> initializePresenter [
+
+	buttonNext action: [ 
+		self onNextClick.
+		self needRebuild: false.
+		self buildWithSpec ]
+]
+
+{ #category : #initialization }
 MOPQuizWindow >> initializeWidgets [
 	
 	buttonNext := self newButton
@@ -72,6 +81,32 @@ MOPQuizWindow >> labelScore [
 { #category : #accessing }
 MOPQuizWindow >> labelScore: anObject [
 	labelScore := anObject
+]
+
+{ #category : #accessing }
+MOPQuizWindow >> onNextClick [
+
+	| nextQuestion |
+	"If not at the beginning, evaluate the answer"
+	quizProgress currentQuestionIndex > 0
+		ifTrue: [ 
+			"Check the correct answer"
+			"Update the score" ].
+	
+	nextQuestion := quizProgress nextQuestion.
+	nextQuestion
+		ifNil: [ 
+			| finalModal |
+			finalModal := MOPMessageModal new
+				setMessage: 'Quiz finished! Your score: ', 
+					quizProgress score asString, '/', 
+					quizProgress quiz questions size asString.
+			finalModal openWithSpec.
+			self window close ]
+		ifNotNil: [ 
+			 questionWidget := (MOPQuestionWidgetFactory new forQuestion: nextQuestion) on: nextQuestion ]
+	
+	
 ]
 
 { #category : #accessing }
