@@ -1,0 +1,70 @@
+Class {
+	#name : #MOPMultiChoiceWidget,
+	#superclass : #DynamicComposableModel,
+	#instVars : [
+		'question',
+		'labelQuestion',
+		'checkAnswers'
+	],
+	#category : #'MOPQuiz-user-interface'
+}
+
+{ #category : #'instance creation' }
+MOPMultiChoiceWidget class >> on: aQuestion [
+
+	| inst |
+	inst := self basicNew.
+	inst question: aQuestion.
+	inst initialize.
+	^ inst
+]
+
+{ #category : #accessing }
+MOPMultiChoiceWidget >> checkAnswers [
+	^ checkAnswers
+]
+
+{ #category : #accessing }
+MOPMultiChoiceWidget >> checkAnswers: anObject [
+	checkAnswers := anObject
+]
+
+{ #category : #accessing }
+MOPMultiChoiceWidget >> initializeWidgets [
+
+	labelQuestion := self newLabel
+		label: question text.
+		
+	1 to: question answers size do: [ :count |
+		| model |
+		model := self newCheckBox.
+		model label: (question answers at: count) text.
+		self assign: model to: ('answer_', count asString) asSymbol ]
+]
+
+{ #category : #accessing }
+MOPMultiChoiceWidget >> labelQuestion [
+	^ labelQuestion
+]
+
+{ #category : #accessing }
+MOPMultiChoiceWidget >> labelQuestion: anObject [
+	labelQuestion := anObject
+]
+
+{ #category : #accessing }
+MOPMultiChoiceWidget >> layout [
+
+	| mainCol |
+	mainCol := SpecColumnLayout composed.
+	mainCol newRow: [ :row | row add: #labelQuestion ] height: ComposableModel buttonHeight.
+	1 to: question answers size do: [ :count |
+		mainCol newRow: [ :inRow |
+			inRow add: ('answer_', count asString) asSymbol ] height: ComposableModel buttonHeight ].
+	^ mainCol
+]
+
+{ #category : #accessing }
+MOPMultiChoiceWidget >> question: anObject [
+	question := anObject
+]
