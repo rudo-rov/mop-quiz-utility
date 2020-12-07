@@ -5,7 +5,8 @@ Class {
 		'listQuiz',
 		'buttonAdd',
 		'buttonDelete',
-		'buttonModify'
+		'buttonModify',
+		'buttonStart'
 	],
 	#category : #'MOPQuiz-user-interface'
 }
@@ -19,7 +20,9 @@ MOPMainWindow class >> defaultSpec [
 				newRow: [ :row |
 					row add: #buttonAdd; add: #buttonModify; add: #buttonDelete ] height: ComposableModel buttonHeight;
 				newRow: [ :row |
-					row add: #listQuiz ] 
+					row add: #listQuiz ];
+				newRow: [ :row |
+					row add: #buttonStart ] height: ComposableModel buttonHeight 
 		];	
 		yourself
 ]
@@ -54,6 +57,16 @@ MOPMainWindow >> buttonModify: anObject [
 	buttonModify := anObject
 ]
 
+{ #category : #accessing }
+MOPMainWindow >> buttonStart [
+	^ buttonStart
+]
+
+{ #category : #accessing }
+MOPMainWindow >> buttonStart: anObject [
+	buttonStart := anObject
+]
+
 { #category : #initialization }
 MOPMainWindow >> initializePresenter [
 
@@ -63,7 +76,8 @@ MOPMainWindow >> initializePresenter [
 		createWindow := MOPQuizCreate new. 
 		createWindow quizes: listQuiz.
 		createWindow openWithSpec modalRelativeTo: World ].
-	buttonDelete action: [ self onDeleteClick ]
+	buttonDelete action: [ self onDeleteClick ].
+	buttonStart action: [ self onStartClick ]
 ]
 
 { #category : #initialization }
@@ -84,6 +98,9 @@ MOPMainWindow >> initializeWidgets [
 	buttonModify 
 		label: 'Modify';
 		icon: (self iconNamed: #edit).
+	buttonStart := self newButton
+		label: 'Start quiz';
+		icon: (self iconNamed: #glamorousGo).
 	
 	quizes := MOPApiRequests new getAllQuizes.	
 	listQuiz
@@ -122,6 +139,36 @@ MOPMainWindow >> onModifyClick [
 		| modifyWindow | 
 		modifyWindow := (MOPQuizModify new setQuiz: selectedQuiz) openWithSpec.
 		modifyWindow modalRelativeTo: World ]
+]
+
+{ #category : #initialization }
+MOPMainWindow >> onStartClick [
+
+	| selectedQuiz |
+	selectedQuiz := listQuiz selectedItem.
+	selectedQuiz 
+		ifNil: [ 
+			| errorModal |
+			errorModal := MOPMessageModal new
+				setMessage: 'No quiz is selected.'.
+				errorModal openWithSpec modalRelativeTo: self ]
+		ifNotNil: [ 
+			selectedQuiz questions
+				ifEmpty: [ 
+					| errorModal |
+					errorModal := MOPMessageModal new
+						setMessage: 'Selected quiz has no questions.'.
+						errorModal openWithSpec modalRelativeTo: self ]
+				ifNotEmpty: [ 
+					| quizWindow newProgress |
+					quizWindow := MOPQuizWindow new.
+					newProgress := MOPQuizProgress new
+						quiz: selectedQuiz.
+					quizWindow quizProgress: newProgress.
+					quizWindow openWithSpec ] ]
+		
+	
+	
 ]
 
 { #category : #accessing }
