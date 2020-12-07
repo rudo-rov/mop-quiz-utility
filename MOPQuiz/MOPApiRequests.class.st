@@ -62,6 +62,19 @@ MOPApiRequests >> createQuizWithName: aName withDescription: aDescription [
 ]
 
 { #category : #initialization }
+MOPApiRequests >> deleteAnswerWithId: anAnswerId forQuestion: aQuestionId [
+
+	| response |
+	response := ZnClient new
+		url: url, '/question/', aQuestionId asString, '/answer/', anAnswerId asString;
+		delete.
+	
+	response ifNil: [ ^ OrderedCollection new ].
+	
+	^ (STONReader on: response readStream) next.
+]
+
+{ #category : #initialization }
 MOPApiRequests >> deleteQuestionWithId: aQuestionId quiz: aQuizId [
 
 	| response |
