@@ -93,6 +93,7 @@ MOPQuizModify >> buttonSave: anObject [
 MOPQuizModify >> initializePresenter [
 
 	buttonDeleteQuestion action: [ self onDeleteQuestionClick  ].
+	buttonDeleteAnswer action: [ self onDeleteAnswerClick ].
 	buttonAddQuestion action: [ 
 		| createWindow |
 		createWindow := MOPQuestionCreate new.
@@ -175,6 +176,21 @@ MOPQuizModify >> listQuestions: anObject [
 ]
 
 { #category : #accessing }
+MOPQuizModify >> onDeleteAnswerClick [
+
+	| newAnswersList pickedQuestion |
+	pickedQuestion := listQuestions selectedItem.
+	pickedQuestion ifNotNil: [ 
+		| pickedAnswer |
+		pickedAnswer := listAnswers selectedItem.
+		pickedAnswer ifNotNil: [ 
+			newAnswersList := MOPApiRequests new
+				deleteAnswerWithId: pickedAnswer answerId
+				forQuestion: pickedQuestion questionId.
+			pickedQuestion answers: newAnswersList. ] ]
+]
+
+{ #category : #accessing }
 MOPQuizModify >> onDeleteQuestionClick [
 
 	| pickedQuestion newQuestionList |
@@ -193,7 +209,9 @@ MOPQuizModify >> onSelectedQuestionChanged [
 	selectedQuestion := listQuestions selectedItem.
 	selectedQuestion ifNotNil: [ 
 		listAnswers
-			items: selectedQuestion answers;
+			items: (selectedQuestion answers
+				ifNotNil: [ selectedQuestion answers ]
+				ifNil: [ OrderedCollection new ]);
 			displayBlock: [ :a | a text ];
 			sortingBlock: [ :a1 :a2 | a1 answerId < a2 answerId ];
 			icons: [ :a | a isRight
