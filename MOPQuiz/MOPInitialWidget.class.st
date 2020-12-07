@@ -7,6 +7,15 @@ Class {
 	#category : #'MOPQuiz-user-interface'
 }
 
+{ #category : #specs }
+MOPInitialWidget class >> defaultSpec [
+
+	^ SpecColumnLayout composed
+		newRow: [ :row |
+			row add: #labelDescription ];
+		yourself
+]
+
 { #category : #initialization }
 MOPInitialWidget >> initializeWidgets [
 	
@@ -26,5 +35,6 @@ MOPInitialWidget >> labelDescription: anObject [
 { #category : #accessing }
 MOPInitialWidget >> setDescription: aString [
 
-	labelDescription label: aString
+	labelDescription 
+		label: aString
 ]

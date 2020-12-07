@@ -15,6 +15,8 @@ MOPQuizWindow class >> defaultSpec [
 
 	^ SpecColumnLayout composed
 		newRow: [ :row |
+			row add: #questionWidget ];
+		newRow: [ :row |
 			row add: #buttonSkip; add: #buttonNext ] height: ComposableModel buttonHeight;
 		yourself
 ]
@@ -76,4 +78,14 @@ MOPQuizWindow >> quizProgress: anObject [
 	
 	quizProgress := anObject.
 	questionWidget setDescription: quizProgress quiz description
+]
+
+{ #category : #initialization }
+MOPQuizWindow >> title [
+
+	| quiz |
+	quiz := quizProgress quiz.
+	quiz
+		ifNil: [ ^ 'Quiz' ]
+		ifNotNil: [ ^ quiz name ]
 ]
