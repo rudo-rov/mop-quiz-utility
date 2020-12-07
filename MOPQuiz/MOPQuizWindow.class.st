@@ -5,7 +5,8 @@ Class {
 		'quizProgress',
 		'buttonNext',
 		'buttonSkip',
-		'questionWidget'
+		'questionWidget',
+		'labelScore'
 	],
 	#category : #'MOPQuiz-user-interface'
 }
@@ -14,6 +15,8 @@ Class {
 MOPQuizWindow class >> defaultSpec [
 
 	^ SpecColumnLayout composed
+		newRow: [ :row |
+			row add: #labelScore ] height: ComposableModel buttonHeight;
 		newRow: [ :row |
 			row add: #questionWidget ];
 		newRow: [ :row |
@@ -49,13 +52,26 @@ MOPQuizWindow >> initializeWidgets [
 		icon: (self iconNamed: #glamorousAccept).
 	buttonSkip := self newButton
 		label: 'Skip';
-		icon: (self iconNamed: #forward).
+		icon: (self iconNamed: #forward);
+		enabled: false.
 		
 	questionWidget := self instantiate: MOPInitialWidget.
+	
+	labelScore := self newLabel.
 		
 	self focusOrder
 		add: buttonSkip;
 		add: buttonNext
+]
+
+{ #category : #accessing }
+MOPQuizWindow >> labelScore [
+	^ labelScore
+]
+
+{ #category : #accessing }
+MOPQuizWindow >> labelScore: anObject [
+	labelScore := anObject
 ]
 
 { #category : #accessing }
@@ -77,7 +93,9 @@ MOPQuizWindow >> quizProgress [
 MOPQuizWindow >> quizProgress: anObject [
 	
 	quizProgress := anObject.
-	questionWidget setDescription: quizProgress quiz description
+	questionWidget setDescription: quizProgress quiz description.
+	labelScore label: quizProgress scoreString 
+	
 ]
 
 { #category : #initialization }

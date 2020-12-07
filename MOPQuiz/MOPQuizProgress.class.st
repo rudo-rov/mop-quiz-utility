@@ -27,3 +27,9 @@ MOPQuizProgress >> quiz: aMOPQuiz [
 	quiz := aMOPQuiz.
 	currentQuestion := 1
 ]
+
+{ #category : #accessing }
+MOPQuizProgress >> scoreString [
+
+	^ 'Score: ', score asString
+]
