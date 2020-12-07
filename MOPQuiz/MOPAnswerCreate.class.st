@@ -42,6 +42,7 @@ MOPAnswerCreate >> initializePresenter [
 
 	radioIsRight activationAction: [ isRight := true ].
 	radioIsFalse activationAction: [ isRight := false ].
+	buttonSave action: [ self onSaveClick ]
 ]
 
 { #category : #accessing }

@@ -26,7 +26,7 @@ MOPDatabaseConnection class >> resetSession [
 ]
 
 { #category : #initialization }
-MOPDatabaseConnection >> createAnswer: aString isRight: aBool forQuestion: aQuestionId [
+MOPDatabaseConnection >> createAnswer: aString isRight: aStringIsRight forQuestion: aQuestionId [
 
 	| question |
 	question := session readOneOf: MOPQuestion where: [ :q | q questionId = aQuestionId  ].
@@ -36,7 +36,7 @@ MOPDatabaseConnection >> createAnswer: aString isRight: aBool forQuestion: aQues
 		| newAnswer |
 		newAnswer := MOPAnswer new
 			text: aString;
-			isRight: aBool.
+			isRight: (self stringToBool: aStringIsRight).
 		session register: newAnswer.
 		question answers add: newAnswer.
 		session register: question ].
@@ -178,4 +178,12 @@ MOPDatabaseConnection >> recreateTables [
 MOPDatabaseConnection >> session [
 
 	^ session
+]
+
+{ #category : #initialization }
+MOPDatabaseConnection >> stringToBool: aString [
+
+	aString asLowercase = 'true'
+		ifTrue: [ ^ true ]
+		ifFalse: [ ^ false ]
 ]

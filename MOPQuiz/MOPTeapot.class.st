@@ -33,7 +33,7 @@ MOPTeapot class >> start [
 		POST: '/question/<qid>/answer' -> [ :req |
 			MOPDatabaseConnection instance
 				createAnswer: (req at: #text)
-				isRight: (req at: #isRight) asBoolean
+				isRight: (req at: #isRight)
 				forQuestion: (req at: #qid) asInteger ];
 		DELETE: '/quiz/<id>' -> [ :req | MOPDatabaseConnection instance deleteQuizWithId: (req at: #id) asInteger ];
 		DELETE: '/quiz/<qid>/question/<id>' -> [ :req |
