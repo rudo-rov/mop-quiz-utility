@@ -10,6 +10,13 @@ Class {
 }
 
 { #category : #accessing }
+MOPQuizProgress >> currentQuestion [
+
+	currentQuestion > 0
+		ifTrue: [ ^ quiz questions at: currentQuestion ]
+]
+
+{ #category : #accessing }
 MOPQuizProgress >> initialize [
 
 	score := 0
