@@ -31,6 +31,16 @@ MOPTextAnswerWidget class >> on: aQuestion [
 ]
 
 { #category : #initialization }
+MOPTextAnswerWidget >> evaluateAnswer [
+
+	| currentAnswer |
+	currentAnswer := textAnswer text.
+	(question answers anySatisfy: [ :answer | answer text = currentAnswer ])
+		ifTrue: [ ^ 1 ]
+		ifFalse: [ ^ 0 ]
+]
+
+{ #category : #initialization }
 MOPTextAnswerWidget >> initializeWidgets [
 	
 	labelQuestion := self newLabel

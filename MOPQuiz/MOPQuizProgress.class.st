@@ -62,3 +62,9 @@ MOPQuizProgress >> scoreString [
 
 	^ 'Score: ', score asString
 ]
+
+{ #category : #accessing }
+MOPQuizProgress >> updateScore: anInteger [
+
+	score := score + anInteger
+]

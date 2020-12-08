@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'question',
 		'labelQuestion',
-		'checkAnswers'
+		'checkAnswers',
+		'selectedAnswers'
 	],
 	#category : #'MOPQuiz-user-interface'
 }
@@ -30,15 +31,37 @@ MOPMultiChoiceWidget >> checkAnswers: anObject [
 ]
 
 { #category : #accessing }
+MOPMultiChoiceWidget >> evaluateAnswer [
+
+	(selectedAnswers allSatisfy: [ :answer | answer isRight ])
+		ifTrue: [ ^ 1 ]
+		ifFalse: [ ^ 0 ]
+	 "TODO: and every non-selected item is incorrect"
+]
+
+{ #category : #accessing }
+MOPMultiChoiceWidget >> initializePresenter [
+
+	checkAnswers keysDo: [ :checkBox |
+		checkBox activationAction: [ 
+			selectedAnswers add: (checkAnswers at: checkBox) ].
+		checkBox deactivationAction: [ 
+			selectedAnswers remove: (checkAnswers at: checkBox) ] ]
+]
+
+{ #category : #accessing }
 MOPMultiChoiceWidget >> initializeWidgets [
 
+	selectedAnswers := Set new.
 	labelQuestion := self newLabel
 		label: question text.
 		
+	checkAnswers := Dictionary new.	
 	1 to: question answers size do: [ :count |
 		| model |
 		model := self newCheckBox.
 		model label: (question answers at: count) text.
+		checkAnswers at: model put: (question answers at: count).
 		self assign: model to: ('answer_', count asString) asSymbol ]
 ]
 

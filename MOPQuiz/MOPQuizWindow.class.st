@@ -90,8 +90,8 @@ MOPQuizWindow >> onNextClick [
 	"If not at the beginning, evaluate the answer"
 	quizProgress currentQuestionIndex > 0
 		ifTrue: [ 
-			"Check the correct answer"
-			"Update the score" ].
+			quizProgress updateScore: questionWidget evaluateAnswer.
+			labelScore label: quizProgress scoreString ].
 	
 	nextQuestion := quizProgress nextQuestion.
 	nextQuestion

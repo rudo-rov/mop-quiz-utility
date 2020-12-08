@@ -5,7 +5,8 @@ Class {
 		'question',
 		'labelQuestion',
 		'radioGroup',
-		'radiosAnswers'
+		'radiosAnswers',
+		'pickedAnswer'
 	],
 	#category : #'MOPQuiz-user-interface'
 }
@@ -21,17 +22,35 @@ MOPSingleChoiceWidget class >> on: aQuestion [
 ]
 
 { #category : #initialization }
+MOPSingleChoiceWidget >> evaluateAnswer [
+
+	pickedAnswer isRight
+		ifTrue: [ ^ 1 ]
+		ifFalse: [ ^ 0 ]
+]
+
+{ #category : #initialization }
+MOPSingleChoiceWidget >> initializePresenter [
+
+	radioGroup buttons do: [ :button |
+		button activationAction: [ 
+			pickedAnswer := radiosAnswers at: button ] ]
+]
+
+{ #category : #initialization }
 MOPSingleChoiceWidget >> initializeWidgets [
 
 	labelQuestion := self newLabel.
 	labelQuestion label: question text.
 	radioGroup := RadioButtonGroup new.
 	
+	radiosAnswers := Dictionary new.
 	1 to: question answers size do: [ :count |
 		| model |
 		model := self newRadioButton.
 		model label: (question answers at: count) text.
 		radioGroup addRadioButton: model.
+		radiosAnswers at: model add: (question answers at: count).
 		self assign: model to: ('answer_', count asString) asSymbol ]
 ]
 
@@ -71,14 +90,4 @@ MOPSingleChoiceWidget >> radioGroup [
 { #category : #accessing }
 MOPSingleChoiceWidget >> radioGroup: anObject [
 	radioGroup := anObject
-]
-
-{ #category : #accessing }
-MOPSingleChoiceWidget >> radiosAnswers [
-	^ radiosAnswers
-]
-
-{ #category : #accessing }
-MOPSingleChoiceWidget >> radiosAnswers: anObject [
-	radiosAnswers := anObject
 ]
