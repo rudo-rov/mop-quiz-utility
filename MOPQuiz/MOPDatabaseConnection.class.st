@@ -102,7 +102,9 @@ MOPDatabaseConnection >> deleteAnswerWithId: anAnswerId forQuestion: aQuestionId
 	
 	session inUnitOfWorkDo: [ 
 		question answers copy do: [ :each | each answerId = anAnswerId ifTrue: [ question answers remove: each ] ]. 
-		session register: question. ]
+		session register: question. ].
+	
+	^ question answers
 ]
 
 { #category : #initialization }

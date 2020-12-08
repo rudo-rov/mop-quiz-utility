@@ -187,6 +187,7 @@ MOPQuizModify >> onDeleteAnswerClick [
 			newAnswersList := MOPApiRequests new
 				deleteAnswerWithId: pickedAnswer answerId
 				forQuestion: pickedQuestion questionId.
+			listAnswers items: newAnswersList.
 			pickedQuestion answers: newAnswersList. ] ]
 ]
 
