@@ -199,6 +199,7 @@ MOPQuizModify >> onDeleteQuestionClick [
 	newQuestionList := MOPApiRequests new 
 		deleteQuestionWithId: pickedQuestion questionId quiz: quiz quizId.
 		
+	quiz questions: newQuestionList.
 	listQuestions items: newQuestionList
 ]
 
