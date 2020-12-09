@@ -3,6 +3,7 @@ Class {
 	#superclass : #ComposableModel,
 	#instVars : [
 		'question',
+		'listAnswers',
 		'labelText',
 		'textQuestion',
 		'radioGroup',
@@ -90,6 +91,12 @@ MOPAnswerCreate >> labelText: anObject [
 ]
 
 { #category : #accessing }
+MOPAnswerCreate >> listAnswers: aListModel [
+
+	listAnswers := aListModel
+]
+
+{ #category : #accessing }
 MOPAnswerCreate >> onSaveClick [
 	
 	| newAnswerText |
@@ -101,8 +108,9 @@ MOPAnswerCreate >> onSaveClick [
 			isRight: isRight
 			forQuestion: question questionId.
 		question answers: response.
+		listAnswers items: response.
 		self window close ]
-	"TODO: use response as a new "
+	
 ]
 
 { #category : #accessing }
