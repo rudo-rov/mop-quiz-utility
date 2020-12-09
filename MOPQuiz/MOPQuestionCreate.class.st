@@ -41,6 +41,12 @@ MOPQuestionCreate >> buttonSave: anObject [
 ]
 
 { #category : #initialization }
+MOPQuestionCreate >> extent [
+
+	^ 400@200
+]
+
+{ #category : #initialization }
 MOPQuestionCreate >> initializePresenter [
 
 	radioSingle activationAction: [ newQuestionType = 1 ].

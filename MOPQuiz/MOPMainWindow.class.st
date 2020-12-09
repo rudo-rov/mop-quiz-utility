@@ -68,6 +68,12 @@ MOPMainWindow >> buttonStart: anObject [
 ]
 
 { #category : #initialization }
+MOPMainWindow >> extent [
+
+	^ 500@400
+]
+
+{ #category : #initialization }
 MOPMainWindow >> initializePresenter [
 
 	buttonModify action: [ self onModifyClick ].

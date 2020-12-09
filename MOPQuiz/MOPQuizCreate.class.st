@@ -31,6 +31,12 @@ MOPQuizCreate >> buttonSave: anObject [
 ]
 
 { #category : #initialization }
+MOPQuizCreate >> extent [
+	
+	^ 500@200
+]
+
+{ #category : #initialization }
 MOPQuizCreate >> initializePresenter [
 
 	buttonSave action: [ self onSaveClick ]

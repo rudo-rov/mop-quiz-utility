@@ -38,6 +38,12 @@ MOPAnswerCreate >> buttonSave: anObject [
 ]
 
 { #category : #accessing }
+MOPAnswerCreate >> extent [
+
+	^ 400@200
+]
+
+{ #category : #accessing }
 MOPAnswerCreate >> initializePresenter [
 
 	radioIsRight activationAction: [ isRight := true ].

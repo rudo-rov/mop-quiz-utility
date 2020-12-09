@@ -90,6 +90,12 @@ MOPQuizModify >> buttonSave: anObject [
 ]
 
 { #category : #initialization }
+MOPQuizModify >> extent [
+
+	^ 600@500
+]
+
+{ #category : #initialization }
 MOPQuizModify >> initializePresenter [
 
 	buttonDeleteQuestion action: [ self onDeleteQuestionClick  ].
