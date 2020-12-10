@@ -134,7 +134,10 @@ MOPDatabaseConnection >> deleteQuestionWithId: anInteger quizId: aQuizId [
 MOPDatabaseConnection >> deleteQuizWithId: anInteger [
 
 	session inUnitOfWorkDo: [ 
-		session delete: MOPQuiz where: [ :each | each quizId = anInteger ]	
+		| quiz |
+		quiz := session readOneOf: MOPQuiz where: [ :q | q quizId = anInteger ].
+		quiz questions do: [ :each | self deleteQuestionWithId: each questionId quizId: quiz quizId ].
+		session delete: quiz	
 	].
 
 	^ self getAllQuizes
@@ -149,9 +152,7 @@ MOPDatabaseConnection >> getAllQuizes [
 { #category : #initialization }
 MOPDatabaseConnection >> getQuizWithId: anInteger [
 
-	^ ((SimpleQuery read: MOPQuiz)
-		where: [ :each | each quizId = anInteger ]
-	) executeIn: session
+	^ session readOneOf: MOPQuiz where: [ :q | q quizId = anInteger ]
 ]
 
 { #category : #initialization }

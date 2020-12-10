@@ -71,7 +71,8 @@ MOPQuizDescriptorSystem >> descriptorForMOPQuestion: aDescriptor [
 	(aDescriptor newMapping: ToManyMapping)
 		attributeName: #answers;
 		beExclusive;
-		referenceClass: MOPAnswer	
+		referenceClass: MOPAnswer;
+		shouldProxy: false.
 ]
 
 { #category : #descriptors }
@@ -91,7 +92,8 @@ MOPQuizDescriptorSystem >> descriptorForMOPQuiz: aDescriptor [
 		to: (table fieldNamed: 'description').
 	(aDescriptor newMapping: ToManyMapping)
 		attributeName: #questions;
-		referenceClass: MOPQuestion
+		referenceClass: MOPQuestion;
+		shouldProxy: false
 ]
 
 { #category : #'table models' }
