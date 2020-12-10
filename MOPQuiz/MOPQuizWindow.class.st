@@ -20,7 +20,7 @@ MOPQuizWindow class >> defaultSpec [
 		newRow: [ :row |
 			row add: #questionWidget ];
 		newRow: [ :row |
-			row add: #buttonSkip; add: #buttonNext ] height: ComposableModel buttonHeight;
+			row add: #buttonNext ] height: ComposableModel buttonHeight;
 		yourself
 ]
 
@@ -32,16 +32,6 @@ MOPQuizWindow >> buttonNext [
 { #category : #accessing }
 MOPQuizWindow >> buttonNext: anObject [
 	buttonNext := anObject
-]
-
-{ #category : #accessing }
-MOPQuizWindow >> buttonSkip [
-	^ buttonSkip
-]
-
-{ #category : #accessing }
-MOPQuizWindow >> buttonSkip: anObject [
-	buttonSkip := anObject
 ]
 
 { #category : #initialization }
@@ -69,7 +59,7 @@ MOPQuizWindow >> initializeWidgets [
 	labelScore := self newLabel.
 		
 	self focusOrder
-		add: buttonSkip;
+		add: questionWidget;
 		add: buttonNext
 ]
 

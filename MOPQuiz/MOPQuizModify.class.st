@@ -6,7 +6,6 @@ Class {
 		'quizDetails',
 		'listQuestions',
 		'listAnswers',
-		'buttonSave',
 		'buttonDeleteQuestion',
 		'buttonAddQuestion',
 		'buttonDeleteAnswer',
@@ -34,8 +33,6 @@ MOPQuizModify class >> defaultSpec [
 						newRow: [ :inRow |
 							inRow add: #buttonAddAnswer; add: #buttonDeleteAnswer ] height: ComposableModel buttonHeight ] 
 		];
-		newRow: [ :row |
-			row add: #buttonSave ] height: ComposableModel buttonHeight;
 		yourself
 ]
 
@@ -79,16 +76,6 @@ MOPQuizModify >> buttonDeleteQuestion: anObject [
 	buttonDeleteQuestion := anObject
 ]
 
-{ #category : #accessing }
-MOPQuizModify >> buttonSave [
-	^ buttonSave
-]
-
-{ #category : #accessing }
-MOPQuizModify >> buttonSave: anObject [
-	buttonSave := anObject
-]
-
 { #category : #initialization }
 MOPQuizModify >> extent [
 
@@ -121,10 +108,6 @@ MOPQuizModify >> initializePresenter [
 MOPQuizModify >> initializeWidgets [
 	
 	quizDetails := self instantiate: MOPQuizDetails.
-	
-	buttonSave := self newButton
-		label: 'Save';
-		icon: (self iconNamed: #smallSave).
 		
 	buttonDeleteQuestion := self newButton
 		label: 'Delete';
@@ -154,8 +137,7 @@ MOPQuizModify >> initializeWidgets [
 		add: buttonAddQuestion;
 		add: buttonDeleteQuestion;
 		add: buttonAddAnswer;
-		add: buttonDeleteAnswer;
-		add: buttonSave
+		add: buttonDeleteAnswer
 ]
 
 { #category : #accessing }
