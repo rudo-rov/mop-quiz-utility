@@ -96,3 +96,42 @@ MOPDatabaseConnectionTest >> testCreateQuiz [
 	self assert: createdEntity description equals: 'SUnit'.
 	self assert: createdEntity questions isEmpty.
 ]
+
+{ #category : #tests }
+MOPDatabaseConnectionTest >> testDeleteQuiz [
+
+	| emptyQuiz filledQuiz session ret1 ret2 |
+	session := MOPDatabaseConnection instance session.
+	
+	MOPDatabaseConnection instance
+		createQuizWithName: 'Empty quiz' 
+		withDescription: 'SUnit'.
+	emptyQuiz := session readOneOf: MOPQuiz where: [ :q | q name = 'Empty quiz' ].
+	self assert: emptyQuiz isNotNil.
+	
+	MOPDatabaseConnection instance
+		createQuizWithName: 'Filled quiz'
+		withDescription: 'SUnit'.
+	filledQuiz := session readOneOf: MOPQuiz where: [ :q | q name = 'Filled quiz' ].
+	self assert: filledQuiz isNotNil.
+	MOPDatabaseConnection instance
+		createQuestionWithText: 'Test 1' withType: 1 forQuiz: filledQuiz quizId;
+		createQuestionWithText: 'Test 2' withType: 2 forQuiz: filledQuiz quizId;
+		createQuestionWithText: 'Test 3' withType: 3 forQuiz: filledQuiz quizId.
+		
+	ret1 := MOPDatabaseConnection instance
+		deleteQuizWithId: emptyQuiz quizId.
+	self 
+		assert: ret1 isNotNil;
+		assert: ret1 class equals: Array;
+		assert: (session readOneOf: MOPQuiz where: [ :q | q quizId = emptyQuiz quizId ]) isNil.
+		
+	ret2 := MOPDatabaseConnection instance
+		deleteQuizWithId: filledQuiz quizId.
+	self
+		assert: ret2 isNotNil;
+		assert: ret2 class equals: Array;
+		assert: (session readOneOf: MOPQuiz where: [ :q | q quizId = filledQuiz quizId ]) isNil
+		
+		
+]
