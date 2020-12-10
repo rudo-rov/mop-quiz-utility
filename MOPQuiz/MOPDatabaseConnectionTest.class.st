@@ -98,6 +98,57 @@ MOPDatabaseConnectionTest >> testCreateQuiz [
 ]
 
 { #category : #tests }
+MOPDatabaseConnectionTest >> testDeleteQuestion [
+
+	| session quiz ret1 ret2 question1 question2 |
+	session := MOPDatabaseConnection instance session.
+	MOPDatabaseConnection instance
+		createQuizWithName: 'SUnit_deleteQuestion1'
+		withDescription: 'SUnit'.
+	quiz := session readOneOf: MOPQuiz where: [ :q | q name = 'SUnit_deleteQuestion1' ].
+	self 
+		assert: quiz isNotNil;
+		assert: quiz questions isEmpty.
+		
+	MOPDatabaseConnection instance
+		createQuestionWithText: 'SUnit_deleteQuestion1' withType: 1 forQuiz: quiz quizId;
+		createQuestionWithText: 'SUnit_deleteQuestion2' withType: 1 forQuiz: quiz quizId.
+		
+	quiz := MOPDatabaseConnection instance getQuizWithId: quiz quizId.
+	self 
+		assert: quiz questions size equals: 2.
+	question1 := quiz questions at: 1.
+	question2 := quiz questions at: 2.
+	
+	ret1 := MOPDatabaseConnection instance deleteQuestionWithId: question1 questionId quizId: quiz quizId.
+	self
+		assert: ret1 isNotNil;
+		assert: ret1 class equals: OrderedCollection;
+		assert: ret1 size equals: 1.
+	quiz := MOPDatabaseConnection instance getQuizWithId: quiz quizId.
+	self
+		assert: quiz questions size equals: 1.
+		
+	ret2 := MOPDatabaseConnection	instance deleteQuestionWithId: question1 questionId quizId: quiz quizId.
+	self
+		assert: ret2 isNotNil;
+		assert: ret2 class equals: OrderedCollection;
+		assert: ret2 size equals: 1.
+	quiz := MOPDatabaseConnection instance getQuizWithId: quiz quizId.
+	self
+		assert: quiz questions size equals: 1.
+		
+	ret2 := MOPDatabaseConnection instance deleteQuestionWithId: question2 questionId quizId: quiz quizId.
+	self
+		assert: ret2 isNotNil;
+		assert: ret2 class equals: OrderedCollection;
+		assert: ret2 size equals: 0.
+	quiz := MOPDatabaseConnection instance getQuizWithId: quiz quizId.
+	self
+		assert: quiz questions isEmpty.
+]
+
+{ #category : #tests }
 MOPDatabaseConnectionTest >> testDeleteQuiz [
 
 	| emptyQuiz filledQuiz session ret1 ret2 |
