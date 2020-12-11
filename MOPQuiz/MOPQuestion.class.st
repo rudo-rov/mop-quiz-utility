@@ -21,9 +21,31 @@ MOPQuestion >> answers: anObject [
 ]
 
 { #category : #accessing }
+MOPQuestion >> answersAreTheSame: anOrderedCollection [
+
+	answers size = anOrderedCollection size
+		ifFalse: [ ^ false ].
+		
+	1 to: answers size do: [ :cnt |
+		((answers at: cnt) isTheSameAs: (anOrderedCollection at: cnt))
+			ifFalse: [ ^ false ] ].
+		
+	^ true
+]
+
+{ #category : #accessing }
 MOPQuestion >> initialize [
 	
 	answers := OrderedCollection new
+]
+
+{ #category : #accessing }
+MOPQuestion >> isTheSameAs: aMOPQuestion [
+
+	^ (questionId = aMOPQuestion questionId)
+	& (text = aMOPQuestion text)
+	& (type = aMOPQuestion type)
+	& (self answersAreTheSame: aMOPQuestion answers)
 ]
 
 { #category : #accessing }

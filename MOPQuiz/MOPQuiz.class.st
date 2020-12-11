@@ -27,6 +27,15 @@ MOPQuiz >> initialize [
 ]
 
 { #category : #accessing }
+MOPQuiz >> isTheSameAs: aMOPQuiz [
+
+	^ (quizId = aMOPQuiz quizId)
+	& (name = aMOPQuiz name)
+	& (description = aMOPQuiz description)
+	& (self questionsAreTheSame: aMOPQuiz questions)
+]
+
+{ #category : #accessing }
 MOPQuiz >> name [
 	^ name
 ]
@@ -44,6 +53,19 @@ MOPQuiz >> questions [
 { #category : #accessing }
 MOPQuiz >> questions: anObject [
 	questions := anObject
+]
+
+{ #category : #accessing }
+MOPQuiz >> questionsAreTheSame: anOrderedCollection [
+
+	questions size = anOrderedCollection size
+		ifFalse: [ ^ false ].
+		
+	1 to: questions size do: [ :cnt |
+		((questions at: cnt) isTheSameAs: (anOrderedCollection at: cnt))
+			ifFalse: [ ^ false ] ].
+		
+	^ true
 ]
 
 { #category : #accessing }

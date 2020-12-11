@@ -30,6 +30,14 @@ MOPAnswer >> isRight: anObject [
 ]
 
 { #category : #accessing }
+MOPAnswer >> isTheSameAs: aMOPAnswer [
+
+	^ (answerId = aMOPAnswer answerId)
+	& (isRight = aMOPAnswer isRight)
+	& (text = aMOPAnswer text)
+]
+
+{ #category : #accessing }
 MOPAnswer >> text [
 	^ text
 ]
