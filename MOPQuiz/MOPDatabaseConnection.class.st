@@ -45,6 +45,46 @@ MOPDatabaseConnection >> createAnswer: aString isRight: aStringIsRight forQuesti
 ]
 
 { #category : #initialization }
+MOPDatabaseConnection >> createCapitalsQuiz [
+
+	| ret newQuizId questions |
+	ret := self 
+		createQuizWithName: 'Capital cities' 
+		withDescription: 'This will test your knowledge of capital cities!'.
+	newQuizId := (ret at: (ret size)) quizId.
+	
+	questions := self 
+		createQuestionWithText: 'What is the capital of Australia?' withType: 1 forQuiz: newQuizId;
+		createQuestionWithText: 'What is the capital of Brazil?' withType: 1 forQuiz: newQuizId;
+		createQuestionWithText: 'What is the capital of Belarus?' withType: 1 forQuiz: newQuizId;
+		createQuestionWithText: 'What is the capital of Poland?' withType: 1 forQuiz: newQuizId;
+		createQuestionWithText: 'What is the capital of Hungary?' withType: 3 forQuiz: newQuizId.
+		
+	self
+		createAnswer: 'Sydney' isRight: false asString forQuestion: (questions at: 1) questionId;
+		createAnswer: 'Canberra' isRight: true asString forQuestion: (questions at: 1) questionId;
+		createAnswer: 'Melbourne' isRight: false asString forQuestion: (questions at: 1) questionId;
+		createAnswer: 'Perth' isRight: false asString forQuestion: (questions at: 1) questionId;
+		createAnswer: 'Sao Paolo' isRight: false asString forQuestion: (questions at: 2) questionId;
+		createAnswer: 'Rio de Janeiro' isRight: false asString forQuestion: (questions at: 2) questionId;
+		createAnswer: 'Brasilia' isRight: true asString forQuestion: (questions at: 2) questionId;
+		createAnswer: 'Kyiv' isRight: false asString forQuestion: (questions at: 3) questionId;
+		createAnswer: 'Minsk' isRight: true asString forQuestion: (questions at: 3) questionId;
+		createAnswer: 'Moscow' isRight: false asString forQuestion: (questions at: 3) questionId;
+		createAnswer: 'Warsaw' isRight: true asString forQuestion: (questions at: 4) questionId;
+		createAnswer: 'Krakow' isRight: false asString forQuestion: (questions at: 4) questionId;
+		createAnswer: 'Gdansk' isRight: false asString forQuestion: (questions at: 4) questionId;
+		createAnswer: 'Debrecen' isRight: false asString forQuestion: (questions at: 5) questionId;
+		createAnswer: 'Miskolc' isRight: false asString forQuestion: (questions at: 5) questionId;
+		createAnswer: 'Budapest' isRight: true asString forQuestion: (questions at: 5) questionId;
+		createAnswer: 'Vienna' isRight: false asString forQuestion: (questions at: 5) questionId
+	
+		
+	 
+		
+]
+
+{ #category : #initialization }
 MOPDatabaseConnection >> createQuestionWithText: aString withType: anInteger forQuiz: aQuizId [
 
 	| quiz |
@@ -83,6 +123,12 @@ MOPDatabaseConnection >> createQuizWithName: aString withDescription: aDescripti
 	
 	session inUnitOfWorkDo: [ session register: newInstance ].
 	^ self getAllQuizes
+]
+
+{ #category : #initialization }
+MOPDatabaseConnection >> createSampleData [
+
+	self createCapitalsQuiz
 ]
 
 { #category : #initialization }

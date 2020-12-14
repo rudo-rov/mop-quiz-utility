@@ -50,7 +50,7 @@ MOPSingleChoiceWidget >> initializeWidgets [
 		model := self newRadioButton.
 		model label: (question answers at: count) text.
 		radioGroup addRadioButton: model.
-		radiosAnswers at: model add: (question answers at: count).
+		radiosAnswers at: model put: (question answers at: count).
 		self assign: model to: ('answer_', count asString) asSymbol ]
 ]
 
