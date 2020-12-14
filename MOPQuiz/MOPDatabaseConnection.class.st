@@ -140,12 +140,14 @@ MOPDatabaseConnection >> deleteQuizWithId: anInteger [
 		session delete: quiz	
 	].
 
-	^ self getAllQuizes
+	^ session read: MOPQuiz
 ]
 
 { #category : #initialization }
 MOPDatabaseConnection >> getAllQuizes [
 
+	"The only way to ensure fresh data?"
+	self class resetSession.
 	^ ((SimpleQuery read: MOPQuiz) shouldRefresh: true) executeIn: session
 ]
 

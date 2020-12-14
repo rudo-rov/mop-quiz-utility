@@ -151,7 +151,7 @@ MOPDatabaseConnectionTest >> testDeleteQuestion [
 { #category : #tests }
 MOPDatabaseConnectionTest >> testDeleteQuiz [
 
-	| emptyQuiz filledQuiz session ret1 ret2 |
+	| emptyQuiz filledQuiz session ret1 ret2 tmp |
 	session := MOPDatabaseConnection instance session.
 	
 	MOPDatabaseConnection instance
@@ -174,15 +174,18 @@ MOPDatabaseConnectionTest >> testDeleteQuiz [
 		deleteQuizWithId: emptyQuiz quizId.
 	self 
 		assert: ret1 isNotNil;
-		assert: ret1 class equals: Array;
-		assert: (session readOneOf: MOPQuiz where: [ :q | q quizId = emptyQuiz quizId ]) isNil.
+		assert: ret1 class equals: Array.
+	
+	tmp := MOPDatabaseConnection instance getQuizWithId: emptyQuiz quizId.	
+	self assert: tmp isNil.
 		
 	ret2 := MOPDatabaseConnection instance
 		deleteQuizWithId: filledQuiz quizId.
 	self
 		assert: ret2 isNotNil;
-		assert: ret2 class equals: Array;
-		assert: (session readOneOf: MOPQuiz where: [ :q | q quizId = filledQuiz quizId ]) isNil
+		assert: ret2 class equals: Array.
+	tmp := MOPDatabaseConnection instance getQuizWithId: filledQuiz quizId.	
+	self assert: tmp isNil
 		
 		
 ]
