@@ -22,3 +22,17 @@ Application allows user to create multiple quizes. These can contain questions o
 The graphical utility allows the user to create new quizes, delete existing ones. User can also modify quizes - create and delete questions, create and
 delete answers to questions. User can also take the quiz - questions are presented in the order they were added, user interface adapts to the type of question.
 In the end, user is presented with the achieved score (the score is not persisted anywhere).
+
+## Running the program
+Before starting the server and client part of the program, it is necessary to have the PostgreSQL database running.
+There may be a need to edit some configuration details (username/password to access the database, name of the database).
+This can be done in method `MOPDatabaseConnection >> initialize`.
+
+To run the program, execute this snippet in the Playground:
+
+```Smalltalk
+MOPDatabaseConnection instance recreateTables. "Creates/Recreates the tables in the database"
+MOPDatabaseConnection instance createSampleData. "Creates some sample data to demonstrate the program"
+MOPTeapot start. "Starts an instance of Teapot server"
+MOPMainWindow new openWithSpec "Opens the main window of the client application"
+```
