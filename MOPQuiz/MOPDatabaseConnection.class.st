@@ -85,6 +85,44 @@ MOPDatabaseConnection >> createCapitalsQuiz [
 ]
 
 { #category : #initialization }
+MOPDatabaseConnection >> createInternetQuiz [
+
+	| ret newQuizId questions |
+	ret := self class instance
+		createQuizWithName: 'Internet'
+		withDescription: 'Test your knowledge in this quiz about internet!'.
+	newQuizId := (ret at: (ret size)) quizId.
+	
+	questions := self
+		createQuestionWithText: 'What does WWW stand for?' withType: 1 forQuiz: newQuizId;
+		createQuestionWithText: 'What does S in HTTPS stand for?' withType: 3 forQuiz: newQuizId;
+		createQuestionWithText: 'Which of these terms are used in relation to internet?' withType: 2 forQuiz: newQuizId;
+		createQuestionWithText: 'Which of the following is a valid IPv4 address?' withType: 2 forQuiz: newQuizId;
+		createQuestionWithText: 'Which IPv4 address is used by a cmoputer to send a message to itself?' withType: 3 forQuiz: newQuizId;
+		createQuestionWithText: 'What does URL stand for?' withType: 1 forQuiz: newQuizId.
+		
+	self
+		createAnswer: 'World Wide West' isRight: false asString forQuestion: (questions at: 1) questionId;
+		createAnswer: 'Wide Web World' isRight: false asString forQuestion: (questions at: 1) questionId;
+		createAnswer: 'World Wide Web' isRight: true asString forQuestion: (questions at: 1) questionId;
+		createAnswer: 'secure' isRight: true asString forQuestion: (questions at: 2) questionId;
+		createAnswer: 'Secure' isRight: true asString forQuestion: (questions at: 2) questionId;
+		createAnswer: 'Cookies' isRight: true asString forQuestion: (questions at: 3) questionId;
+		createAnswer: 'Brownies' isRight: false asString forQuestion: (questions at: 3) questionId;
+		createAnswer: 'Cake' isRight: false asString forQuestion: (questions at: 3) questionId;
+		createAnswer: 'Spam' isRight: true asString forQuestion: (questions at: 3) questionId;
+		createAnswer: '192.168.0.1' isRight: true asString forQuestion: (questions at: 4) questionId;
+		createAnswer: '255.255.255.255' isRight: true asString forQuestion: (questions at: 4) questionId;
+		createAnswer: '192.168.256.382' isRight: false asString forQuestion: (questions at: 4) questionId;
+		createAnswer: '33.33.33.33' isRight: true asString forQuestion: (questions at: 4) questionId;
+		createAnswer: '127.0.0.1' isRight: true asString forQuestion: (questions at: 5) questionId;
+		createAnswer: 'Unique Records List' isRight: false asString forQuestion: (questions at: 6) questionId;
+		createAnswer: 'Uniform Resource Locator' isRight: true asString forQuestion: (questions at: 6) questionId;
+		createAnswer: 'Undefined Restricted Learner' isRight: false asString forQuestion: (questions at: 6) questionId;
+		createAnswer: 'Universal Robot Location' isRight: false asString forQuestion: (questions at: 6) questionId 
+]
+
+{ #category : #initialization }
 MOPDatabaseConnection >> createQuestionWithText: aString withType: anInteger forQuiz: aQuizId [
 
 	| quiz |
@@ -128,7 +166,9 @@ MOPDatabaseConnection >> createQuizWithName: aString withDescription: aDescripti
 { #category : #initialization }
 MOPDatabaseConnection >> createSampleData [
 
-	self createCapitalsQuiz
+	self 
+		createCapitalsQuiz;
+		createInternetQuiz
 ]
 
 { #category : #initialization }
