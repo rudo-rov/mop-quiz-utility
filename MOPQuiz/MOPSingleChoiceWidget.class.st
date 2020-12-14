@@ -24,9 +24,13 @@ MOPSingleChoiceWidget class >> on: aQuestion [
 { #category : #initialization }
 MOPSingleChoiceWidget >> evaluateAnswer [
 
-	pickedAnswer isRight
-		ifTrue: [ ^ 1 ]
-		ifFalse: [ ^ 0 ]
+	pickedAnswer 
+		ifNotNil: [ 
+			pickedAnswer isRight
+				ifTrue: [ ^ 1 ]
+				ifFalse: [ ^ 0 ] ]
+		ifNil: [ ^ 0 ]
+	
 ]
 
 { #category : #initialization }
