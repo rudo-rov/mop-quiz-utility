@@ -34,7 +34,11 @@ MOPMultiChoiceWidget >> checkAnswers: anObject [
 MOPMultiChoiceWidget >> evaluateAnswer [
 
 	(selectedAnswers allSatisfy: [ :answer | answer isRight ])
-		ifTrue: [ ^ 1 ]
+		ifTrue: [ 
+			((question answers reject: [ :each | selectedAnswers includes: each ]) allSatisfy: [ :each |
+				each isRight = false ])
+					ifTrue: [ ^ 1 ]
+					ifFalse: [ ^ 0 ] ]
 		ifFalse: [ ^ 0 ]
 	 "TODO: and every non-selected item is incorrect"
 ]
