@@ -96,7 +96,7 @@ MOPAnswerCreate >> listAnswers: aListModel [
 	listAnswers := aListModel
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 MOPAnswerCreate >> onSaveClick [
 	
 	| newAnswerText |

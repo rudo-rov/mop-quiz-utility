@@ -29,7 +29,7 @@ MOPAnswer >> isRight: anObject [
 	isRight := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #comparing }
 MOPAnswer >> isTheSameAs: aMOPAnswer [
 
 	^ (answerId = aMOPAnswer answerId)

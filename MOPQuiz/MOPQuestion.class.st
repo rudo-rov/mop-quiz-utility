@@ -20,7 +20,7 @@ MOPQuestion >> answers: anObject [
 	answers := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #comparing }
 MOPQuestion >> answersAreTheSame: anOrderedCollection [
 
 	answers size = anOrderedCollection size
@@ -39,7 +39,7 @@ MOPQuestion >> initialize [
 	answers := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : #comparing }
 MOPQuestion >> isTheSameAs: aMOPQuestion [
 
 	^ (questionId = aMOPQuestion questionId)

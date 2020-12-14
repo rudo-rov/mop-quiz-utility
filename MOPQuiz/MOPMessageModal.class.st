@@ -58,7 +58,7 @@ MOPMessageModal >> labelMessage: anObject [
 	labelMessage := anObject
 ]
 
-{ #category : #initialization }
+{ #category : #api }
 MOPMessageModal >> setMessage: aString [
 
 	labelMessage label: aString

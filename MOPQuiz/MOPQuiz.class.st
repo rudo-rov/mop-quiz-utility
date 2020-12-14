@@ -26,7 +26,7 @@ MOPQuiz >> initialize [
 	questions := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : #comparing }
 MOPQuiz >> isTheSameAs: aMOPQuiz [
 
 	^ (quizId = aMOPQuiz quizId)
@@ -55,7 +55,7 @@ MOPQuiz >> questions: anObject [
 	questions := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #comparing }
 MOPQuiz >> questionsAreTheSame: anOrderedCollection [
 
 	questions size = anOrderedCollection size

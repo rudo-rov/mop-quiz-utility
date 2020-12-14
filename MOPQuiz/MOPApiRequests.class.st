@@ -8,7 +8,7 @@ Class {
 	#category : #'MOPQuiz-user-interface'
 }
 
-{ #category : #initialization }
+{ #category : #creating }
 MOPApiRequests >> createAnswer: aString isRight: aBool forQuestion: aQuestionId [
 
 	| response |
@@ -25,7 +25,7 @@ MOPApiRequests >> createAnswer: aString isRight: aBool forQuestion: aQuestionId 
 	
 ]
 
-{ #category : #initialization }
+{ #category : #creating }
 MOPApiRequests >> createQuestionWithText: aText withType: aType forQuiz: aQuizId [
 
 	| response |
@@ -43,7 +43,7 @@ MOPApiRequests >> createQuestionWithText: aText withType: aType forQuiz: aQuizId
 	
 ]
 
-{ #category : #initialization }
+{ #category : #creating }
 MOPApiRequests >> createQuizWithName: aName withDescription: aDescription [
 
 	| response |
@@ -61,7 +61,7 @@ MOPApiRequests >> createQuizWithName: aName withDescription: aDescription [
 	
 ]
 
-{ #category : #initialization }
+{ #category : #deleting }
 MOPApiRequests >> deleteAnswerWithId: anAnswerId forQuestion: aQuestionId [
 
 	| response |
@@ -74,7 +74,7 @@ MOPApiRequests >> deleteAnswerWithId: anAnswerId forQuestion: aQuestionId [
 	^ (STONReader on: response readStream) next.
 ]
 
-{ #category : #initialization }
+{ #category : #deleting }
 MOPApiRequests >> deleteQuestionWithId: aQuestionId quiz: aQuizId [
 
 	| response |
@@ -85,7 +85,7 @@ MOPApiRequests >> deleteQuestionWithId: aQuestionId quiz: aQuizId [
 	^ (STONReader on: response readStream) next
 ]
 
-{ #category : #initialization }
+{ #category : #deleting }
 MOPApiRequests >> deleteQuizWithId: anInteger [
 
 	| response |
@@ -96,7 +96,7 @@ MOPApiRequests >> deleteQuizWithId: anInteger [
 	^ (STONReader on: response readStream) next
 ]
 
-{ #category : #initialization }
+{ #category : #reading }
 MOPApiRequests >> getAllQuizes [
 
 	| response  |

@@ -25,7 +25,7 @@ MOPDatabaseConnection class >> resetSession [
 	instance := nil
 ]
 
-{ #category : #initialization }
+{ #category : #creating }
 MOPDatabaseConnection >> createAnswer: aString isRight: aStringIsRight forQuestion: aQuestionId [
 
 	| question |
@@ -44,7 +44,7 @@ MOPDatabaseConnection >> createAnswer: aString isRight: aStringIsRight forQuesti
 	^ question answers
 ]
 
-{ #category : #initialization }
+{ #category : #samples }
 MOPDatabaseConnection >> createCapitalsQuiz [
 
 	| ret newQuizId questions |
@@ -84,7 +84,7 @@ MOPDatabaseConnection >> createCapitalsQuiz [
 		
 ]
 
-{ #category : #initialization }
+{ #category : #samples }
 MOPDatabaseConnection >> createInternetQuiz [
 
 	| ret newQuizId questions |
@@ -122,7 +122,7 @@ MOPDatabaseConnection >> createInternetQuiz [
 		createAnswer: 'Universal Robot Location' isRight: false asString forQuestion: (questions at: 6) questionId 
 ]
 
-{ #category : #initialization }
+{ #category : #creating }
 MOPDatabaseConnection >> createQuestionWithText: aString withType: anInteger forQuiz: aQuizId [
 
 	| quiz |
@@ -141,7 +141,7 @@ MOPDatabaseConnection >> createQuestionWithText: aString withType: anInteger for
 	^ quiz questions
 ]
 
-{ #category : #initialization }
+{ #category : #creating }
 MOPDatabaseConnection >> createQuizWithName: aString [
 
 	| newInstance |
@@ -151,7 +151,7 @@ MOPDatabaseConnection >> createQuizWithName: aString [
 	session inUnitOfWorkDo: [ session register: newInstance ]
 ]
 
-{ #category : #initialization }
+{ #category : #creating }
 MOPDatabaseConnection >> createQuizWithName: aString withDescription: aDescriptionString [
 
 	| newInstance |
@@ -163,7 +163,7 @@ MOPDatabaseConnection >> createQuizWithName: aString withDescription: aDescripti
 	^ self getAllQuizes
 ]
 
-{ #category : #initialization }
+{ #category : #samples }
 MOPDatabaseConnection >> createSampleData [
 
 	self 
@@ -171,7 +171,7 @@ MOPDatabaseConnection >> createSampleData [
 		createInternetQuiz
 ]
 
-{ #category : #initialization }
+{ #category : #deleting }
 MOPDatabaseConnection >> deleteAnswerWithId: anInteger [
 
 	session inUnitOfWorkDo: [ 
@@ -179,7 +179,7 @@ MOPDatabaseConnection >> deleteAnswerWithId: anInteger [
 	]
 ]
 
-{ #category : #initialization }
+{ #category : #deleting }
 MOPDatabaseConnection >> deleteAnswerWithId: anAnswerId forQuestion: aQuestionId [
 
 	| question |
@@ -193,7 +193,7 @@ MOPDatabaseConnection >> deleteAnswerWithId: anAnswerId forQuestion: aQuestionId
 	^ question answers
 ]
 
-{ #category : #initialization }
+{ #category : #deleting }
 MOPDatabaseConnection >> deleteQuestionWithId: anInteger [
 
 	| toDelete |
@@ -205,7 +205,7 @@ MOPDatabaseConnection >> deleteQuestionWithId: anInteger [
 	
 ]
 
-{ #category : #initialization }
+{ #category : #deleting }
 MOPDatabaseConnection >> deleteQuestionWithId: anInteger quizId: aQuizId [
 
 	| quiz |
@@ -216,7 +216,7 @@ MOPDatabaseConnection >> deleteQuestionWithId: anInteger quizId: aQuizId [
 	
 ]
 
-{ #category : #initialization }
+{ #category : #deleting }
 MOPDatabaseConnection >> deleteQuizWithId: anInteger [
 
 	session inUnitOfWorkDo: [ 
@@ -229,7 +229,7 @@ MOPDatabaseConnection >> deleteQuizWithId: anInteger [
 	^ session read: MOPQuiz
 ]
 
-{ #category : #initialization }
+{ #category : #reading }
 MOPDatabaseConnection >> getAllQuizes [
 
 	"The only way to ensure fresh data?"
@@ -237,7 +237,7 @@ MOPDatabaseConnection >> getAllQuizes [
 	^ ((SimpleQuery read: MOPQuiz) shouldRefresh: true) executeIn: session
 ]
 
-{ #category : #initialization }
+{ #category : #reading }
 MOPDatabaseConnection >> getQuizWithId: anInteger [
 
 	^ session readOneOf: MOPQuiz where: [ :q | q quizId = anInteger ]
@@ -265,13 +265,13 @@ MOPDatabaseConnection >> recreateTables [
 	session recreateTables
 ]
 
-{ #category : #initialization }
+{ #category : #accesing }
 MOPDatabaseConnection >> session [
 
 	^ session
 ]
 
-{ #category : #initialization }
+{ #category : #helper }
 MOPDatabaseConnection >> stringToBool: aString [
 
 	aString asLowercase = 'true'

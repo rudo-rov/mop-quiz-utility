@@ -125,7 +125,7 @@ MOPMainWindow >> listQuiz: anObject [
 	listQuiz := anObject
 ]
 
-{ #category : #initialization }
+{ #category : #actions }
 MOPMainWindow >> onDeleteClick [
 
 	| selectedQuiz newList |
@@ -136,7 +136,7 @@ MOPMainWindow >> onDeleteClick [
 	listQuiz items: newList
 ]
 
-{ #category : #initialization }
+{ #category : #actions }
 MOPMainWindow >> onModifyClick [
 
 	| selectedQuiz |
@@ -147,7 +147,7 @@ MOPMainWindow >> onModifyClick [
 		modifyWindow modalRelativeTo: World ]
 ]
 
-{ #category : #initialization }
+{ #category : #actions }
 MOPMainWindow >> onStartClick [
 
 	| selectedQuiz |
