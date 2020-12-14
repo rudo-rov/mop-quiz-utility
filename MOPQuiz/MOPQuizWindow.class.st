@@ -73,7 +73,7 @@ MOPQuizWindow >> labelScore: anObject [
 	labelScore := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 MOPQuizWindow >> onNextClick [
 
 	| nextQuestion |

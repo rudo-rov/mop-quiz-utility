@@ -9,14 +9,14 @@ Class {
 	#category : #'MOPQuiz-user-interface'
 }
 
-{ #category : #accessing }
+{ #category : #api }
 MOPQuizProgress >> currentQuestion [
 
 	currentQuestion > 0
 		ifTrue: [ ^ quiz questions at: currentQuestion ]
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 MOPQuizProgress >> currentQuestionIndex [
 
 	^ currentQuestion
@@ -29,7 +29,7 @@ MOPQuizProgress >> initialize [
 	currentQuestion := 0
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 MOPQuizProgress >> nextQuestion [
 
 	currentQuestion = quiz questions size
@@ -57,13 +57,13 @@ MOPQuizProgress >> score [
 	^ score
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 MOPQuizProgress >> scoreString [
 
 	^ 'Score: ', score asString
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 MOPQuizProgress >> updateScore: anInteger [
 
 	score := score + anInteger

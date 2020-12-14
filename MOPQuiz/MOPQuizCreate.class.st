@@ -56,7 +56,7 @@ MOPQuizCreate >> initializeWidgets [
 		add: buttonSave
 ]
 
-{ #category : #initialization }
+{ #category : #actions }
 MOPQuizCreate >> onSaveClick [
 
 	"TODO: Add a control for empty name"

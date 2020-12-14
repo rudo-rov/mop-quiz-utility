@@ -21,7 +21,7 @@ MOPSingleChoiceWidget class >> on: aQuestion [
 	^ inst
 ]
 
-{ #category : #initialization }
+{ #category : #actions }
 MOPSingleChoiceWidget >> evaluateAnswer [
 
 	pickedAnswer 

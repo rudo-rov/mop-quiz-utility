@@ -160,7 +160,7 @@ MOPQuizModify >> listQuestions: anObject [
 	listQuestions := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 MOPQuizModify >> onDeleteAnswerClick [
 
 	| newAnswersList pickedQuestion |
@@ -176,7 +176,7 @@ MOPQuizModify >> onDeleteAnswerClick [
 			pickedQuestion answers: newAnswersList. ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 MOPQuizModify >> onDeleteQuestionClick [
 
 	| pickedQuestion newQuestionList |
@@ -189,7 +189,7 @@ MOPQuizModify >> onDeleteQuestionClick [
 	listQuestions items: newQuestionList
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 MOPQuizModify >> onSelectedQuestionChanged [
 
 	| selectedQuestion |

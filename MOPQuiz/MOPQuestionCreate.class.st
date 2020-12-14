@@ -112,7 +112,7 @@ MOPQuestionCreate >> listQuestions: aList [
 	listQuestions := aList
 ]
 
-{ #category : #initialization }
+{ #category : #actions }
 MOPQuestionCreate >> onSaveClick [
 
 	| text newList |
